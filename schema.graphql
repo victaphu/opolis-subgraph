@@ -1,0 +1,130 @@
+#################################################
+# Interfaces
+#################################################
+
+interface IEvent {
+  id: ID!
+  timestamp: BigInt!
+}
+
+interface IContract {
+  id: ID!
+  createdAt: BigInt!
+}
+
+#################################################
+# Current-state entities
+#################################################
+
+type User @entity {
+  id: ID!  # deafult opolis wallet address
+  defaultWallet: Wallet!
+  preferredWallet: Wallet!
+  wallets: [Wallet!] @derivedFrom(field: "user")
+  isEmployee: Boolean!
+  isWhitelisted: Boolean!
+  totalStakedBalance: BigDecimal!
+  totalRewardClaimed: BigDecimal!
+  createdAt: BigInt!
+}
+
+type Wallet @entity {
+  id: ID!
+  user: User!
+  createdAt: BigInt!
+}
+
+type Token @entity {
+  id: ID! # token address
+  name: String!
+  symbol: String!
+  decimals: Int!
+  totalSupply: BigInt!
+}
+
+type StakingContract implements IContract @entity {
+  id: ID!
+  owner: Bytes!
+  isPaused: Boolean!
+  stakeToken: Token!
+  minStake: BigDecimal!
+  totalStake: BigDecimal!
+  description: String!
+  createdAt: BigInt!
+}
+
+type WhitelistContract implements IContract @entity {
+  id: ID!
+  owner: Bytes!
+  totalUsers: BigInt!
+  totalWhitelistedUsers: BigInt!
+  totalEmployeeUsers: BigInt!
+  totalCoalitionUsers: BigInt!
+  createdAt: BigInt!
+}
+
+type MerkleRedeemContract implements IContract @entity {
+  id: ID!
+  owner: Bytes!
+  rewardToken: Token!
+  totalRewardCycles: BigInt!
+  createdAt: BigInt!
+}
+
+#################################################
+# Historical event entities
+#################################################
+
+type AddedToWhitelistEvent implements IEvent @entity {
+  id: ID!
+  user: User!
+  isEmployee: Boolean!
+  timestamp: BigInt!
+}
+
+type UpdatedWhitelistAddressEvent implements IEvent @entity {
+  id: ID!
+  user: User!
+  updatedWallet: Wallet!
+  timestamp: BigInt!
+}
+
+type RemovedFromWhitelistEvent implements IEvent @entity {
+  id: ID!
+  user: User!
+  timestamp: BigInt!
+}
+
+type StakeEvent implements IEvent @entity {
+  id: ID!
+  user: User!
+  wallet: Wallet!
+  amount: BigDecimal!
+  totalStaked: BigDecimal!
+  timestamp: BigInt!
+}
+
+type UnstakeEvent implements IEvent @entity {
+  id: ID!
+  user: User!
+  wallet: Wallet!
+  amount: BigDecimal!
+  totalStaked: BigDecimal!
+  timestamp: BigInt!
+}
+
+type RootAddedEvent implements IEvent @entity {
+  id: ID!
+  epoch: BigInt!
+  totalAllocation: BigDecimal!
+  depositor: Bytes!
+  timestamp: BigInt!
+}
+
+type ClaimedEvent implements IEvent @entity {
+  id: ID!
+  epoch: BigInt!
+  wallet: Wallet!
+  claimedBalance: BigDecimal!
+  timestamp: BigInt!
+}
