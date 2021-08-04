@@ -85,6 +85,7 @@ type AddedToWhitelistEvent implements IEvent @entity {
 type UpdatedWhitelistAddressEvent implements IEvent @entity {
   id: ID!
   user: User!
+  oldWallet: Wallet!
   updatedWallet: Wallet!
   timestamp: BigInt!
 }
