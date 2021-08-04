@@ -38,3 +38,15 @@ export function updatePreferredWallet(
   dbUser.preferredWallet = dbPreferredWallet.id;
   dbUser.save();
 }
+
+export function removeUserFromWhitelist(address: Address): void {
+  let dbUser = User.load(address.toHex());
+
+  if (!dbUser) {
+    log.error("User with id: {} doesn't exist!", [address.toHex()]);
+    return;
+  }
+
+  dbUser.isWhitelisted = false;
+  dbUser.save();
+}

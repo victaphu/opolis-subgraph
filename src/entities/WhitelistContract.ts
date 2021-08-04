@@ -47,7 +47,9 @@ export function increaseWhitelistUserCount(
   dbContract.save();
 }
 
-export function decreaseWhitelistUserCount(whitelistContractAddress: Address): void {
+export function decreaseWhitelistUserCount(
+  whitelistContractAddress: Address
+): void {
   let dbContract = WhitelistContract.load(whitelistContractAddress.toHex());
   if (!dbContract) {
     log.error("WhitelistContract doesn't exist at {}!", [
