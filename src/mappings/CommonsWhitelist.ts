@@ -33,7 +33,7 @@ export function handleAddedToWhitelist(event: AddedToWhitelist): void {
   createUser(
     event.params.account,
     event.params.employee,
-    false,
+    true,
     event.block.timestamp
   );
   increaseWhitelistUserCount(event.address, event.params.employee);
