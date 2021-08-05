@@ -7,7 +7,9 @@ export function createRemovedFromWhitelistEvent(
   let eventId: string =
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
-  let dbEvent = new RemovedFromWhitelistEvent(eventId);
+  let dbEvent: RemovedFromWhitelistEvent = new RemovedFromWhitelistEvent(
+    eventId
+  );
   dbEvent.user = event.params.account.toHex();
   dbEvent.timestamp = event.block.timestamp;
   dbEvent.save();

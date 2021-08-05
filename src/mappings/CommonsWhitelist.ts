@@ -20,10 +20,10 @@ import { createRemovedFromWhitelistEvent } from "../entities/RemovedFromWhitelis
 import { createUpdatedWhitelistAddressEvent } from "../entities/UpdatedWhitelistAddressEvent";
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  let dbWhitelistContract = WhitelistContract.load(event.address.toHex());
-  if (dbWhitelistContract) {
-    dbWhitelistContract.owner = event.params.newOwner;
-    dbWhitelistContract.save();
+  let dbContract = WhitelistContract.load(event.address.toHex());
+  if (dbContract) {
+    dbContract.owner = event.params.newOwner;
+    dbContract.save();
   } else {
     createWhitelistContract(
       event.address,
