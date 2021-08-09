@@ -6,10 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: CommonsWhitelist
-    network: mainnet
+    network: mumbai
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
+      address: '0xD268969970570c5c41FfeC12813da0bc73581826'
       abi: CommonsWhitelist
+      startBlock: 17224384
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -30,27 +31,52 @@ dataSources:
 
   - kind: ethereum/contract
     name: CommonsEasyStaking
-    network: mainnet
+    network: mumbai
     source:
-      address: '0x2E645469f354BB4F5c8a05B3b30A929361cf77eC'
+      address: '0x4E0b295e8E24f841740eCc94CfbE3E75aDcD6955'
       abi: CommonsEasyStaking
+      startBlock: 17302112
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities: []
       abis:
+        - name: CommonsEasyStaking
+          file: ./abis/CommonsEasyStaking.json
         - name: ERC20Contract
           file: ./abis/ERC20Contract.json
         - name: ERC20NameBytes
           file: ./abis/ERC20NameBytes.json
         - name: ERC20SymbolBytes
           file: ./abis/ERC20SymbolBytes.json
-        - name: CommonsEasyStaking
-          file: ./abis/CommonsEasyStaking.json
       eventHandlers:
         - event: Stake(address,uint256,uint256)
           handler: handleStack
         - event: unStake(address,uint256,uint256)
           handler: handleUnstake
       file: ./src/mappings/CommonsEasyStaking.ts
+
+  - kind: ethereum/contract
+    name: MerkleRedeem
+    network: mumbai
+    source:
+      address: '0xBDc0b7C32401034E2E4c6d03FC9D5c0a5999B0d8'
+      abi: MerkleRedeem
+      startBlock: 17307388
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: MerkleRedeem
+          file: ./abis/MerkleRedeem.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RootAdded(indexed address,indexed uint256,uint256)
+          handler: handleRootAdded
+        - event: Claimed(indexed address,indexed uint256,uint256)
+          handler: handleClaimed
+      file: ./src/mappings/MerkleRedeem.ts
