@@ -12,6 +12,7 @@ export function createWhitelistContract(
   dbContract.owner = owner;
   dbContract.totalUsers = BigInt.fromString("0");
   dbContract.totalWhitelistedUsers = BigInt.fromString("0");
+  dbContract.totalWhitelistedEmployees = BigInt.fromString("0");
   dbContract.totalEmployeeUsers = BigInt.fromString("0");
   dbContract.totalCoalitionUsers = BigInt.fromString("0");
 
@@ -38,6 +39,9 @@ export function increaseWhitelistUserCount(
     dbContract.totalEmployeeUsers = dbContract.totalEmployeeUsers.plus(
       BigInt.fromString("1")
     );
+    dbContract.totalWhitelistedEmployees = dbContract.totalWhitelistedEmployees.plus(
+      BigInt.fromString("1")
+    );
   } else {
     dbContract.totalCoalitionUsers = dbContract.totalCoalitionUsers.plus(
       BigInt.fromString("1")
@@ -48,7 +52,8 @@ export function increaseWhitelistUserCount(
 }
 
 export function decreaseWhitelistUserCount(
-  whitelistContractAddress: Address
+  whitelistContractAddress: Address,
+  isEmployee: boolean
 ): void {
   let dbContract = WhitelistContract.load(whitelistContractAddress.toHex());
   if (!dbContract) {
@@ -60,6 +65,12 @@ export function decreaseWhitelistUserCount(
   dbContract.totalWhitelistedUsers = dbContract.totalWhitelistedUsers.minus(
     BigInt.fromString("1")
   );
+
+  if (isEmployee) {
+    dbContract.totalWhitelistedEmployees = dbContract.totalWhitelistedEmployees.minus(
+      BigInt.fromString("1")
+    );
+  }
 
   dbContract.save();
 }

@@ -58,6 +58,7 @@ type WhitelistContract implements IContract @entity {
   owner: Bytes!
   totalUsers: BigInt!
   totalWhitelistedUsers: BigInt!
+  totalWhitelistedEmployees: BigInt!
   totalEmployeeUsers: BigInt!
   totalCoalitionUsers: BigInt!
   createdAt: BigInt!

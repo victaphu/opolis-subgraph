@@ -12,6 +12,7 @@ import {
 } from "../entities/WhitelistContract";
 import {
   createUser,
+  isEmployee,
   removeUserFromWhitelist,
   updatePreferredWallet
 } from "../entities/User";
@@ -46,7 +47,7 @@ export function handleAddedToWhitelist(event: AddedToWhitelist): void {
 
 export function handleRemovedFromWhitelist(event: RemovedFromWhitelist): void {
   removeUserFromWhitelist(event.params.account);
-  decreaseWhitelistUserCount(event.address);
+  decreaseWhitelistUserCount(event.address, isEmployee(event.address));
   createRemovedFromWhitelistEvent(event);
 }
 

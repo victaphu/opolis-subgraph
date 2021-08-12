@@ -21,6 +21,16 @@ export function createUser(
   dbUser.save();
 }
 
+export function isEmployee(address: Address): boolean {
+  let dbUser = User.load(address.toHex());
+
+  if (!dbUser) {
+    log.error("User with id: {} doesn't exist!", [address.toHex()]);
+    return false;
+  }
+  return dbUser.isEmployee;
+}
+
 export function updatePreferredWallet(
   oldPreferredWalletAddress: Address,
   newPreferredWalletAddress: Address,
