@@ -1,16 +1,16 @@
 specVersion: 0.0.2
 description: Opolis Subgraph on Polygon
-# repository: https://github.com/graphprotocol/example-subgraph
+repository: https://github.com/graphprotocol/example-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: CommonsWhitelist
-    network: mumbai
+    network: {{network}}
     source:
-      address: '0xD268969970570c5c41FfeC12813da0bc73581826'
+      address: '{{whitelist_contract}}'
       abi: CommonsWhitelist
-      startBlock: 17224384
+      startBlock: {{whitelist_startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -33,11 +33,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: CommonsEasyStaking
-    network: mumbai
+    network: {{network}}
     source:
-      address: '0x4E0b295e8E24f841740eCc94CfbE3E75aDcD6955'
+      address: '{{staking_contract}}'
       abi: CommonsEasyStaking
-      startBlock: 17302112
+      startBlock: {{staking_startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -63,11 +63,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: MerkleRedeem
-    network: mumbai
+    network: {{network}}
     source:
-      address: '0xBDc0b7C32401034E2E4c6d03FC9D5c0a5999B0d8'
+      address: '{{merkleRedeem_contract}}'
       abi: MerkleRedeem
-      startBlock: 17307388
+      startBlock: {{merkleRedeem_startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

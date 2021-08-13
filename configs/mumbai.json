@@ -1,0 +1,9 @@
+{
+  "network": "mumbai",
+  "whitelist_contract": "0xD268969970570c5c41FfeC12813da0bc73581826",
+  "whitelist_startBlock": 17224384,
+  "staking_contract": "0x4E0b295e8E24f841740eCc94CfbE3E75aDcD6955",
+  "staking_startBlock": 17302112,
+  "merkleRedeem_contract": "0xBDc0b7C32401034E2E4c6d03FC9D5c0a5999B0d8",
+  "merkleRedeem_startBlock": 17307388
+}

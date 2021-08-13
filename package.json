@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "scripts": {
     "format": "prettier --write \"./**/*.{js,jsx,json,ts}\"",
-    "create": "graph create niraj-kamdar/opolis --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create niraj-kamdar/opolis --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy niraj-kamdar/opolis --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy niraj-kamdar/opolis --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+    "prepare:mumbai": "mustache configs/mumbai.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "prepare:matic": "mustache configs/matic.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "create:matic": "graph create opolis/opolis-work-polygon --node https://api.thegraph.com/deploy/",
+    "create:mumbai": "graph create opolis/opolis-work-mumbai --node https://api.thegraph.com/deploy/",
+    "create:local": "graph create opolis/opolis-work-local --node http://127.0.0.1:8020",
+    "deploy:matic": "graph deploy opolis/opolis-work-polygon --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy:mumbai": "graph deploy opolis/opolis-work-mumbai --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy:local": "graph deploy opolis/opolis-work-local --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.1",
@@ -17,6 +21,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "mustache": "^4.2.0"
   }
 }
