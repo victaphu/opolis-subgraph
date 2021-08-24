@@ -1,4 +1,10 @@
-import { StakingContract, Token, User, Wallet } from "./../../generated/schema";
+import {
+  MerkleRedeemContract,
+  StakingContract,
+  Token,
+  User,
+  Wallet
+} from "./../../generated/schema";
 import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
 import { ensureWallet } from "./Wallet";
 import { ensureToken } from "./Token";
@@ -9,7 +15,7 @@ export function createUser(
   isEmployee: boolean,
   isWhitelisted: boolean,
   timestamp: BigInt
-): void {
+): User {
   let dbWallet: Wallet = ensureWallet(address, timestamp);
 
   let dbUser: User = new User(address.toHex());
@@ -21,6 +27,7 @@ export function createUser(
   dbUser.totalStakedBalance = BigDecimal.fromString("0");
   dbUser.totalRewardClaimed = BigDecimal.fromString("0");
   dbUser.save();
+  return dbUser;
 }
 
 export function isEmployee(address: Address): boolean {
@@ -100,6 +107,27 @@ export function decreaseUserStakeBy(
   let dbContract = StakingContract.load(stakingContractAddress.toHex());
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
   dbUser.totalStakedBalance = dbUser.totalStakedBalance.minus(
+    toBigDecimal(value, dbToken.decimals)
+  );
+  dbUser.save();
+}
+
+export function increaseRewardClaimedBy(
+  merkleRedeemContractAddress: Address,
+  walletAddress: Address,
+  value: BigInt,
+  timestamp: BigInt
+): void {
+  let dbWallet: Wallet = ensureWallet(walletAddress, timestamp);
+  let dbUser = User.load(dbWallet.user);
+  if (!dbUser) {
+    dbUser = createUser(walletAddress, false, false, timestamp);
+  }
+  let dbContract = MerkleRedeemContract.load(
+    merkleRedeemContractAddress.toHex()
+  );
+  let dbToken: Token = ensureToken(Address.fromString(dbContract.rewardToken));
+  dbUser.totalRewardClaimed = dbUser.totalRewardClaimed.plus(
     toBigDecimal(value, dbToken.decimals)
   );
   dbUser.save();
