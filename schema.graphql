@@ -58,6 +58,7 @@ type WhitelistContract implements IContract @entity {
   owner: Bytes!
   totalUsers: BigInt!
   totalWhitelistedUsers: BigInt!
+  totalWhitelistedEmployees: BigInt!
   totalEmployeeUsers: BigInt!
   totalCoalitionUsers: BigInt!
   createdAt: BigInt!
@@ -85,6 +86,7 @@ type AddedToWhitelistEvent implements IEvent @entity {
 type UpdatedWhitelistAddressEvent implements IEvent @entity {
   id: ID!
   user: User!
+  oldWallet: Wallet!
   updatedWallet: Wallet!
   timestamp: BigInt!
 }
