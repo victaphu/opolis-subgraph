@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 description: Opolis Subgraph on Polygon
-repository: https://github.com/graphprotocol/example-subgraph
+repository: https://github.com/opolis/opolis-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
