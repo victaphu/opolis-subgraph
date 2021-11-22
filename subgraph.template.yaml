@@ -84,3 +84,48 @@ dataSources:
         - event: Claimed(indexed address,indexed uint256,uint256)
           handler: handleClaimed
       file: ./src/mappings/MerkleRedeem.ts
+
+  - kind: ethereum/contract
+    name: OpolisPay
+    network: {{network}}
+    source:
+      address: '{{opolisPay_contract}}'
+      abi: OpolisPay
+      startBlock: {{opolisPay_startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: OpolisPay
+          file: ./abis/OpolisPay.json
+      eventHandlers:
+        # event SetupComplete(address payable destination, address admin, address helper, address[] tokens);
+        - event: SetupComplete(indexed address,indexed address,indexed address,address[])
+          handler: handleSetupComplete
+        # event Staked(address staker, address token, uint256 amount, uint256 memberId);
+        - event: Staked(indexed address,indexed address,uint256,indexed uint256)
+          handler: handleStaked
+        # event Paid(address payor, address token, uint256 payrollId, uint256 amount); 
+        - event: Paid(indexed address,indexed address,indexed uint256,uint256)
+          handler: handlePaid
+        # event OpsWithdraw(address token, uint256 payrollId, uint256 amount, bool withdrawn);
+        - event: OpsWithdraw(indexed address,indexed uint256,uint256,bool)
+          handler: handleOpsWithdraw
+        # event Sweep(address token, uint256 amount);
+        - event: Sweep(indexed address,uint256)
+          handler: handleSweep
+        # event NewDestination(address destination);
+        - event: NewDestination(indexed address)
+          handler: handleNewDestination
+        # event NewAdmin(address opolisAdmin);
+        - event: NewAdmin(indexed address)
+          handler: handleNewAdmin
+        # event NewHelper(address newHelper);
+        - event: NewHelper(indexed address)
+          handler: handleNewHelper
+        # event NewTokens(address[] newTokens);
+        - event: NewTokens(address[])
+          handler: handleNewTokens
+      file: ./src/mappings/OpolisPay.ts
