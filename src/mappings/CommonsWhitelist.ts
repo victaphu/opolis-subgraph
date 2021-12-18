@@ -3,7 +3,8 @@ import {
   OwnershipTransferred,
   AddedToWhitelist,
   RemovedFromWhitelist,
-  UpdatedWhitelistAddress
+  UpdatedWhitelistAddress,
+  MassAdd
 } from "./../../generated/CommonsWhitelist/CommonsWhitelist";
 import {
   createWhitelistContract,
@@ -19,6 +20,13 @@ import {
 import { createAddedToWhitelistEvent } from "../entities/AddedToWhitelistEvent";
 import { createRemovedFromWhitelistEvent } from "../entities/RemovedFromWhitelistEvent";
 import { createUpdatedWhitelistAddressEvent } from "../entities/UpdatedWhitelistAddressEvent";
+
+import { log } from "@graphprotocol/graph-ts";
+
+export function handleMassAdd(event: MassAdd): void {
+  let accounts = event.params.accounts;
+  log.info('mass add {}', [accounts.toHexString()])
+}
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   let dbContract = WhitelistContract.load(event.address.toHex());
