@@ -1,5 +1,5 @@
-import { NewDestination } from "../../generated/OpolisPay/OpolisPay";
-import { NewDestinationEvent } from "./../../generated/schema";
+import { NewDestination } from "../../../../generated/OpolisPay/OpolisPay";
+import { NewDestinationEvent } from "../../../../generated/schema";
 
 export function createNewDestinationEvent(event: NewDestination): void {
   let eventId: string =

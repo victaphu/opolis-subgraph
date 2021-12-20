@@ -71,15 +71,34 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      }
+    ],
+    "name": "OpsPayrollWithdraw",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "stakeId",
+        "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "withdrawn",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "name": "OpsWithdraw",
+    "name": "OpsStakeWithdraw",
     "type": "event"
   },
   {

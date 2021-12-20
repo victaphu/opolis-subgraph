@@ -3,12 +3,12 @@
 #################################################
 
 interface IEvent {
-  id: ID!  # transactionHash-logId
+  id: ID! # transactionHash-logId
   timestamp: BigInt!
 }
 
 interface IContract {
-  id: ID!  # Contract address
+  id: ID! # Contract address
   createdAt: BigInt!
 }
 
@@ -17,7 +17,7 @@ interface IContract {
 #################################################
 
 type User @entity {
-  id: ID!  # deafult opolis wallet address
+  id: ID! # deafult opolis wallet address
   defaultWallet: Wallet!
   preferredWallet: Wallet!
   wallets: [Wallet!] @derivedFrom(field: "user")
@@ -29,7 +29,7 @@ type User @entity {
 }
 
 type Wallet @entity {
-  id: ID!  # wallet address
+  id: ID! # wallet address
   user: User!
   createdAt: BigInt!
 }
@@ -46,7 +46,7 @@ type Payroll @entity {
   id: ID! # payrollId
   payor: Bytes! # address of the payor
   token: Token!
-  amount: BigDecimal! 
+  amount: BigDecimal!
   createdAt: BigInt!
   withdrawnAt: BigInt
 }
@@ -59,7 +59,7 @@ type OpolisPayToken @entity {
 }
 
 type OpolisPayContract implements IContract @entity {
-  id: ID!  # Contract address
+  id: ID! # Contract address
   opolisAdmin: Bytes!
   opolisHelper: Bytes!
   destination: Bytes!
@@ -192,9 +192,17 @@ type PaidEvent implements IEvent @entity {
   timestamp: BigInt!
 }
 
-type OpsWithdrawEvent implements IEvent @entity {
+type OpsPayrollWithdrawEvent implements IEvent @entity {
   id: ID!
   payrollId: BigInt!
+  token: Token!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type OpsStakeWithdrawEvent implements IEvent @entity {
+  id: ID!
+  stakeId: BigInt!
   token: Token!
   amount: BigDecimal!
   timestamp: BigInt!

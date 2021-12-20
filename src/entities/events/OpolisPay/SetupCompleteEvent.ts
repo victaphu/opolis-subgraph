@@ -1,6 +1,6 @@
 import { Bytes } from "@graphprotocol/graph-ts";
-import { SetupComplete } from "../../generated/OpolisPay/OpolisPay";
-import {SetupCompleteEvent} from "../../generated/schema";
+import { SetupComplete } from "../../../../generated/OpolisPay/OpolisPay";
+import {SetupCompleteEvent} from "../../../../generated/schema";
 
 export function createSetupCompleteEvent(event: SetupComplete): void {
   let eventId: string =
@@ -10,7 +10,7 @@ export function createSetupCompleteEvent(event: SetupComplete): void {
   dbEvent.admin = event.params.admin;
   dbEvent.destination = event.params.destination;
   dbEvent.helper = event.params.helper;
-  dbEvent.supportedTokens = event.params.tokens as Bytes[];
+  dbEvent.supportedTokens = event.params.tokens.map<Bytes>(token => (token as Bytes));
   dbEvent.timestamp = event.block.timestamp;
   dbEvent.save();
 }

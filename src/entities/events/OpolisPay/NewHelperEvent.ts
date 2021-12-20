@@ -1,5 +1,5 @@
-import { NewHelper } from "../../generated/OpolisPay/OpolisPay";
-import { NewHelperEvent } from "./../../generated/schema";
+import { NewHelper } from "../../../../generated/OpolisPay/OpolisPay";
+import { NewHelperEvent } from "../../../../generated/schema";
 
 export function createNewHelperEvent(event: NewHelper): void {
   let eventId: string =

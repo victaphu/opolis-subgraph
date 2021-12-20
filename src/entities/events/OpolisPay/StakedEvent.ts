@@ -1,12 +1,11 @@
-import { Bytes } from "@graphprotocol/graph-ts";
-import { Staked } from "../../generated/OpolisPay/OpolisPay";
-import {StakedEvent} from "../../generated/schema";
-import { toBigDecimal } from "../utils/toBigDecimal";
-import { ensureToken } from "./Token";
+import { Staked } from "../../../../generated/OpolisPay/OpolisPay";
+import { StakedEvent } from "../../../../generated/schema";
+import { toBigDecimal } from "../../../utils/toBigDecimal";
+import { ensureToken } from "../../Token";
 
 export function createStakedEvent(event: Staked): void {
   let eventId: string =
-  event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   let dbEvent: StakedEvent = new StakedEvent(eventId);
   let dbToken = ensureToken(event.params.token);

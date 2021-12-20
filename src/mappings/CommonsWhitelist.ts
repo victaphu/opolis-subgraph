@@ -1,24 +1,22 @@
-import { WhitelistContract } from "./../../generated/schema";
 import {
-  OwnershipTransferred,
-  AddedToWhitelist,
-  RemovedFromWhitelist,
+  AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist,
   UpdatedWhitelistAddress
-} from "./../../generated/CommonsWhitelist/CommonsWhitelist";
+} from "../../generated/CommonsWhitelist/CommonsWhitelist";
+import { WhitelistContract } from "../../generated/schema";
 import {
   createWhitelistContract,
   decreaseWhitelistUserCount,
   increaseWhitelistUserCount
-} from "../entities/WhitelistContract";
+} from "../entities/contracts/WhitelistContract";
+import { createAddedToWhitelistEvent } from "../entities/events/CommonsWhitelist/AddedToWhitelistEvent";
+import { createRemovedFromWhitelistEvent } from "../entities/events/CommonsWhitelist/RemovedFromWhitelistEvent";
+import { createUpdatedWhitelistAddressEvent } from "../entities/events/CommonsWhitelist/UpdatedWhitelistAddressEvent";
 import {
   createUser,
   isEmployee,
   removeUserFromWhitelist,
   updatePreferredWallet
 } from "../entities/User";
-import { createAddedToWhitelistEvent } from "../entities/AddedToWhitelistEvent";
-import { createRemovedFromWhitelistEvent } from "../entities/RemovedFromWhitelistEvent";
-import { createUpdatedWhitelistAddressEvent } from "../entities/UpdatedWhitelistAddressEvent";
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {
   let dbContract = WhitelistContract.load(event.address.toHex());

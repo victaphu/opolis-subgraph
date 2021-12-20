@@ -3,23 +3,31 @@ import {
   NewDestination,
   NewHelper,
   NewTokens,
-  OpsWithdraw,
+  OpsPayrollWithdraw,
+  OpsStakeWithdraw,
   Paid,
   SetupComplete,
   Staked,
   Sweep,
 } from "../../generated/OpolisPay/OpolisPay";
-import { createNewAdminEvent } from "../entities/NewAdminEvent";
-import { createNewDestinationEvent } from "../entities/NewDestinationEvent";
-import { createNewHelperEvent } from "../entities/NewHelperEvent";
-import { createNewTokensEvent } from "../entities/NewTokensEvent";
-import { addTokens, createOpolisPayContract, updateAdmin, updateDestination, updateHelper } from "../entities/OpolisPayContract";
-import { createOpsWithdrawEvent } from "../entities/OpsWithdrawEvent";
-import { createPaidEvent } from "../entities/PaidEvent";
+import {
+  addTokens,
+  createOpolisPayContract,
+  updateAdmin,
+  updateDestination,
+  updateHelper,
+} from "../entities/contracts/OpolisPayContract";
+import { createNewAdminEvent } from "../entities/events/OpolisPay/NewAdminEvent";
+import { createNewDestinationEvent } from "../entities/events/OpolisPay/NewDestinationEvent";
+import { createNewHelperEvent } from "../entities/events/OpolisPay/NewHelperEvent";
+import { createNewTokensEvent } from "../entities/events/OpolisPay/NewTokensEvent";
+import { createOpsPayrollWithdrawEvent } from "../entities/events/OpolisPay/OpsPayrollWithdrawEvent";
+import { createOpsStakeWithdrawEvent } from "../entities/events/OpolisPay/OpsStakeWithdrawEvent";
+import { createPaidEvent } from "../entities/events/OpolisPay/PaidEvent";
+import { createSetupCompleteEvent } from "../entities/events/OpolisPay/SetupCompleteEvent";
+import { createStakedEvent } from "../entities/events/OpolisPay/StakedEvent";
+import { createSweepEvent } from "../entities/events/OpolisPay/SweepEvent";
 import { createPayroll, withdrawPayroll } from "../entities/Payroll";
-import { createSetupCompleteEvent } from "../entities/SetupCompleteEvent";
-import { createStakedEvent } from "../entities/StakedEvent";
-import { createSweepEvent } from "../entities/SweepEvent";
 
 export function handleSetupComplete(event: SetupComplete): void {
   createOpolisPayContract(
@@ -39,13 +47,24 @@ export function handleStaked(event: Staked): void {
 }
 
 export function handlePaid(event: Paid): void {
-  createPayroll(event.params.payrollId, event.params.token, event.params.amount, event.params.payor, event.block.timestamp);
+  createPayroll(
+    event.params.payrollId,
+    event.params.token,
+    event.params.amount,
+    event.params.payor,
+    event.block.timestamp
+  );
   createPaidEvent(event);
 }
 
-export function handleOpsWithdraw(event: OpsWithdraw): void {
+export function handleOpsPayrollWithdraw(event: OpsPayrollWithdraw): void {
   withdrawPayroll(event.params.payrollId, event.block.timestamp);
-  createOpsWithdrawEvent(event);
+  createOpsPayrollWithdrawEvent(event);
+}
+
+export function handleOpsStakeWithdraw(event: OpsStakeWithdraw): void {
+  withdrawPayroll(event.params.stakeId, event.block.timestamp);
+  createOpsStakeWithdrawEvent(event);
 }
 
 export function handleSweep(event: Sweep): void {

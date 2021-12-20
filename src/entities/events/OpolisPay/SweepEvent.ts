@@ -1,7 +1,7 @@
-import { Sweep } from "../../generated/OpolisPay/OpolisPay";
-import {SweepEvent} from "../../generated/schema";
-import { toBigDecimal } from "../utils/toBigDecimal";
-import { ensureToken } from "./Token";
+import { Sweep } from "../../../../generated/OpolisPay/OpolisPay";
+import {SweepEvent} from "../../../../generated/schema";
+import { toBigDecimal } from "../../../utils/toBigDecimal";
+import { ensureToken } from "../../Token";
 
 export function createSweepEvent(event: Sweep): void {
   let eventId: string =

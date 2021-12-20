@@ -1,5 +1,5 @@
-import { WhitelistContract } from "./../../generated/schema";
 import { Address, BigInt, log } from "@graphprotocol/graph-ts";
+import { WhitelistContract } from "../../../generated/schema";
 
 export function createWhitelistContract(
   address: Address,
@@ -26,7 +26,7 @@ export function increaseWhitelistUserCount(
   let dbContract = WhitelistContract.load(whitelistContractAddress.toHex());
   if (!dbContract) {
     log.error("WhitelistContract doesn't exist at {}!", [
-      whitelistContractAddress.toHex()
+      whitelistContractAddress.toHex(),
     ]);
     return;
   }
@@ -58,7 +58,7 @@ export function decreaseWhitelistUserCount(
   let dbContract = WhitelistContract.load(whitelistContractAddress.toHex());
   if (!dbContract) {
     log.error("WhitelistContract doesn't exist at {}!", [
-      whitelistContractAddress.toHex()
+      whitelistContractAddress.toHex(),
     ]);
     return;
   }

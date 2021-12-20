@@ -1,5 +1,5 @@
-import { NewAdmin } from "../../generated/OpolisPay/OpolisPay";
-import { NewAdminEvent } from "./../../generated/schema";
+import { NewAdmin } from "../../../../generated/OpolisPay/OpolisPay";
+import { NewAdminEvent } from "../../../../generated/schema";
 
 export function createNewAdminEvent(event: NewAdmin): void {
   let eventId: string =

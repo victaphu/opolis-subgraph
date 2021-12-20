@@ -1,7 +1,7 @@
-import { Paid } from "../../generated/OpolisPay/OpolisPay";
-import { PaidEvent } from "../../generated/schema";
-import { toBigDecimal } from "../utils/toBigDecimal";
-import { ensureToken } from "./Token";
+import { Paid } from "../../../../generated/OpolisPay/OpolisPay";
+import { PaidEvent } from "../../../../generated/schema";
+import { toBigDecimal } from "../../../utils/toBigDecimal";
+import { ensureToken } from "../../Token";
 
 export function createPaidEvent(event: Paid): void {
   let eventId: string =

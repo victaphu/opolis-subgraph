@@ -17,7 +17,8 @@ export function createPayroll(id: BigInt, token: Address, amount: BigInt, payor:
 export function withdrawPayroll(id: BigInt, withdrawnAt: BigInt): void {
   let dbPayroll = Payroll.load(id.toString())
   if (!dbPayroll) {
-    log.critical("withdrawPayroll: payroll with payrollId: {} doesn't exist!", [dbPayroll.id.toString()]);
+    log.critical("withdrawPayroll: payroll with payrollId: {} doesn't exist!", [id.toString()]);
+    return;
   }
 
   dbPayroll.withdrawnAt = withdrawnAt;

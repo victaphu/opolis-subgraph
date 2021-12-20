@@ -1,9 +1,8 @@
-import { MerkleRedeem } from "./../../generated/MerkleRedeem/MerkleRedeem";
-import { Token } from "./../../generated/schema";
-import { Address, BigInt, BigDecimal, log } from "@graphprotocol/graph-ts";
-import { MerkleRedeemContract } from "../../generated/schema";
-import { ensureToken } from "./Token";
-import { toBigDecimal } from "../utils/toBigDecimal";
+import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
+import { MerkleRedeem } from "../../../generated/MerkleRedeem/MerkleRedeem";
+import { MerkleRedeemContract, Token } from "../../../generated/schema";
+import { toBigDecimal } from "../../utils/toBigDecimal";
+import { ensureToken } from "../Token";
 
 export function createMerkleRedeemContract(
   contractAddress: Address,
@@ -18,7 +17,7 @@ export function createMerkleRedeemContract(
   let dbToken: Token = ensureToken(tokenAddressResult.value);
   if (dbToken.id == "Unknown") {
     log.critical("stakeToken: {} isn't standard ERC20 token!", [
-      tokenAddressResult.value.toHex()
+      tokenAddressResult.value.toHex(),
     ]);
   }
 
@@ -34,6 +33,10 @@ export function createMerkleRedeemContract(
 
 export function increaseTotalRewardCycles(address: Address): void {
   let dbContract = MerkleRedeemContract.load(address.toHex());
+  if (!dbContract) {
+    log.error("MerkleRedeemContract with id: {} doesn't exist!", [address.toHex()]);
+    return;
+  }
   dbContract.totalRewardCycles = dbContract.totalRewardCycles.plus(
     BigInt.fromString("1")
   );
@@ -45,6 +48,10 @@ export function increaseTotalTokenAllocationBy(
   value: BigInt
 ): void {
   let dbContract = MerkleRedeemContract.load(address.toHex());
+  if (!dbContract) {
+    log.error("MerkleRedeemContract with id: {} doesn't exist!", [address.toHex()]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.rewardToken));
   dbContract.totalTokenAllocation = dbContract.totalTokenAllocation.plus(
     toBigDecimal(value, dbToken.decimals)
