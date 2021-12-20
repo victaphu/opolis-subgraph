@@ -4,6 +4,6 @@
   "whitelist_startBlock": 15871898,
   "staking_contract": "0x8bF5aD0dBa1e29741740D96E55Bf27Aec30B18E2",
   "staking_startBlock": 15871970,
-  "merkleRedeem_contract": "0xBDc0b7C32401034E2E4c6d03FC9D5c0a5999B0d8",
-  "merkleRedeem_startBlock": 17307388
+  "merkleRedeem_contract": "0xd8C5C9D730f66cc42dB4b5A5E43b2e872d34424B",
+  "merkleRedeem_startBlock": 18710838
 }
