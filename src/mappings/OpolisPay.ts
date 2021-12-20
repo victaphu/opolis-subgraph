@@ -8,14 +8,14 @@ import {
   Paid,
   SetupComplete,
   Staked,
-  Sweep,
+  Sweep
 } from "../../generated/OpolisPay/OpolisPay";
 import {
   addTokens,
   createOpolisPayContract,
   updateAdmin,
   updateDestination,
-  updateHelper,
+  updateHelper
 } from "../entities/contracts/OpolisPayContract";
 import { createNewAdminEvent } from "../entities/events/OpolisPay/NewAdminEvent";
 import { createNewDestinationEvent } from "../entities/events/OpolisPay/NewDestinationEvent";

@@ -7,7 +7,9 @@ export function createNewTokensEvent(event: NewTokens): void {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   let dbEvent: NewTokensEvent = new NewTokensEvent(eventId);
-  dbEvent.newTokens = event.params.newTokens.map<Bytes>(token => (token as Bytes));
+  dbEvent.newTokens = event.params.newTokens.map<Bytes>(
+    token => token as Bytes
+  );
   dbEvent.timestamp = event.block.timestamp;
   dbEvent.save();
 }

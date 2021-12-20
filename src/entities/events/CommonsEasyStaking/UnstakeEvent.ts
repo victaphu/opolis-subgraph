@@ -4,7 +4,7 @@ import {
   StakingContract,
   Token,
   UnstakeEvent,
-  Wallet,
+  Wallet
 } from "../../../../generated/schema";
 import { toBigDecimal } from "../../../utils/toBigDecimal";
 import { ensureToken } from "../../Token";
@@ -21,7 +21,9 @@ export function createUnstakeEvent(event: unStake): void {
   );
   let dbContract = StakingContract.load(event.address.toHex());
   if (!dbContract) {
-    log.error("StakingContract with id: {} doesn't exist!", [event.address.toHex()]);
+    log.error("StakingContract with id: {} doesn't exist!", [
+      event.address.toHex()
+    ]);
     return;
   }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));

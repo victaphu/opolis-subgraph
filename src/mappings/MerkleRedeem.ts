@@ -1,13 +1,13 @@
 import {
   Claimed,
   OwnershipTransferred,
-  RootAdded,
+  RootAdded
 } from "../../generated/MerkleRedeem/MerkleRedeem";
 import { MerkleRedeemContract } from "../../generated/schema";
 import {
   createMerkleRedeemContract,
   increaseTotalRewardCycles,
-  increaseTotalTokenAllocationBy,
+  increaseTotalTokenAllocationBy
 } from "../entities/contracts/MerkleRedeemContract";
 import { createClaimedEvent } from "../entities/events/MerkleRedeem/ClaimedEvent";
 import { createRootAddedEvent } from "../entities/events/MerkleRedeem/RootAddedEvent";

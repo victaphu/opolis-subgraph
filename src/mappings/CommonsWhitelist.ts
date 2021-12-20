@@ -1,6 +1,9 @@
 import {
-  AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist,
-  UpdatedWhitelistAddress, MassAdd
+  AddedToWhitelist,
+  OwnershipTransferred,
+  RemovedFromWhitelist,
+  UpdatedWhitelistAddress,
+  MassAdd
 } from "../../generated/CommonsWhitelist/CommonsWhitelist";
 import { WhitelistContract } from "../../generated/schema";
 import {
@@ -22,7 +25,7 @@ import { log } from "@graphprotocol/graph-ts";
 
 export function handleMassAdd(event: MassAdd): void {
   let accounts = event.params.accounts;
-  log.info('mass add {}', [accounts.toHexString()])
+  log.info("mass add {}", [accounts.toHexString()]);
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

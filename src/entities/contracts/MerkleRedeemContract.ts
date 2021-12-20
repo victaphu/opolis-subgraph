@@ -17,7 +17,7 @@ export function createMerkleRedeemContract(
   let dbToken: Token = ensureToken(tokenAddressResult.value);
   if (dbToken.id == "Unknown") {
     log.critical("stakeToken: {} isn't standard ERC20 token!", [
-      tokenAddressResult.value.toHex(),
+      tokenAddressResult.value.toHex()
     ]);
   }
 
@@ -34,7 +34,9 @@ export function createMerkleRedeemContract(
 export function increaseTotalRewardCycles(address: Address): void {
   let dbContract = MerkleRedeemContract.load(address.toHex());
   if (!dbContract) {
-    log.error("MerkleRedeemContract with id: {} doesn't exist!", [address.toHex()]);
+    log.error("MerkleRedeemContract with id: {} doesn't exist!", [
+      address.toHex()
+    ]);
     return;
   }
   dbContract.totalRewardCycles = dbContract.totalRewardCycles.plus(
@@ -49,7 +51,9 @@ export function increaseTotalTokenAllocationBy(
 ): void {
   let dbContract = MerkleRedeemContract.load(address.toHex());
   if (!dbContract) {
-    log.error("MerkleRedeemContract with id: {} doesn't exist!", [address.toHex()]);
+    log.error("MerkleRedeemContract with id: {} doesn't exist!", [
+      address.toHex()
+    ]);
     return;
   }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.rewardToken));

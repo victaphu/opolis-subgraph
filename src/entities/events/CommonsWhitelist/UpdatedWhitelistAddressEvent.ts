@@ -1,5 +1,8 @@
 import { UpdatedWhitelistAddress } from "../../../../generated/CommonsWhitelist/CommonsWhitelist";
-import { UpdatedWhitelistAddressEvent, Wallet } from "../../../../generated/schema";
+import {
+  UpdatedWhitelistAddressEvent,
+  Wallet
+} from "../../../../generated/schema";
 import { ensureWallet } from "../../Wallet";
 
 export function createUpdatedWhitelistAddressEvent(

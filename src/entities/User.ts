@@ -5,7 +5,7 @@ import {
   StakingContract,
   Token,
   User,
-  Wallet,
+  Wallet
 } from "../../generated/schema";
 import { ensureToken } from "./Token";
 import { ensureWallet } from "./Wallet";
@@ -94,7 +94,9 @@ export function increaseUserStakeBy(
   }
   let dbContract = StakingContract.load(stakingContractAddress.toHex());
   if (!dbContract) {
-    log.error("StakingContract with id: {} doesn't exist!", [stakingContractAddress.toHex()]);
+    log.error("StakingContract with id: {} doesn't exist!", [
+      stakingContractAddress.toHex()
+    ]);
     return;
   }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
@@ -102,7 +104,7 @@ export function increaseUserStakeBy(
   if (!dbUser) {
     dbUser = createUser(walletAddress, false, true, timestamp);
   }
-  
+
   dbUser.totalStakedBalance = dbUser.totalStakedBalance.plus(
     toBigDecimal(value, dbToken.decimals)
   );
@@ -123,7 +125,9 @@ export function decreaseUserStakeBy(
   }
   let dbContract = StakingContract.load(stakingContractAddress.toHex());
   if (!dbContract) {
-    log.error("StakingContract with id: {} doesn't exist!", [stakingContractAddress.toHex()]);
+    log.error("StakingContract with id: {} doesn't exist!", [
+      stakingContractAddress.toHex()
+    ]);
     return;
   }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
@@ -148,7 +152,9 @@ export function increaseRewardClaimedBy(
     merkleRedeemContractAddress.toHex()
   );
   if (!dbContract) {
-    log.error("MerkleRedeemContract with id: {} doesn't exist!", [merkleRedeemContractAddress.toHex()]);
+    log.error("MerkleRedeemContract with id: {} doesn't exist!", [
+      merkleRedeemContractAddress.toHex()
+    ]);
     return;
   }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.rewardToken));

@@ -19,30 +19,45 @@ export function createOpolisPayContract(
   dbContract.save();
 }
 
-export function updateDestination(contractAddress: Address, destinationAddress: Address): void {
+export function updateDestination(
+  contractAddress: Address,
+  destinationAddress: Address
+): void {
   let dbContract = OpolisPayContract.load(contractAddress.toHex());
   if (!dbContract) {
-    log.critical("updateDestination: contract not found at {}", [contractAddress.toHex()]);
+    log.critical("updateDestination: contract not found at {}", [
+      contractAddress.toHex()
+    ]);
     return;
   }
   dbContract.destination = destinationAddress;
   dbContract.save();
 }
 
-export function updateAdmin(contractAddress: Address, adminAddress: Address): void {
+export function updateAdmin(
+  contractAddress: Address,
+  adminAddress: Address
+): void {
   let dbContract = OpolisPayContract.load(contractAddress.toHex());
   if (!dbContract) {
-    log.critical("updateAdmin: contract not found at {}", [contractAddress.toHex()]);
+    log.critical("updateAdmin: contract not found at {}", [
+      contractAddress.toHex()
+    ]);
     return;
   }
   dbContract.opolisAdmin = adminAddress;
   dbContract.save();
 }
 
-export function updateHelper(contractAddress: Address, helperAddress: Address): void {
+export function updateHelper(
+  contractAddress: Address,
+  helperAddress: Address
+): void {
   let dbContract = OpolisPayContract.load(contractAddress.toHex());
   if (!dbContract) {
-    log.critical("updateDestination: contract not found at {}", [contractAddress.toHex()]);
+    log.critical("updateDestination: contract not found at {}", [
+      contractAddress.toHex()
+    ]);
     return;
   }
   dbContract.opolisHelper = helperAddress;
@@ -52,7 +67,9 @@ export function updateHelper(contractAddress: Address, helperAddress: Address): 
 export function addTokens(contractAddress: Address, tokens: Address[]): void {
   let dbContract = OpolisPayContract.load(contractAddress.toHex());
   if (!dbContract) {
-    log.critical("addTokens: contract not found at {}", [contractAddress.toHex()]);
+    log.critical("addTokens: contract not found at {}", [
+      contractAddress.toHex()
+    ]);
     return;
   }
   for (let i = 0; i < tokens.length; i++) {
