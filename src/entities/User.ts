@@ -98,6 +98,11 @@ export function increaseUserStakeBy(
     return;
   }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
+
+  if (!dbUser) {
+    dbUser = createUser(walletAddress, false, true, timestamp);
+  }
+  
   dbUser.totalStakedBalance = dbUser.totalStakedBalance.plus(
     toBigDecimal(value, dbToken.decimals)
   );
