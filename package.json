@@ -5,6 +5,7 @@
     "format": "prettier --write \"./**/*.{js,jsx,json,ts,graphql}\"",
     "codegen": "graph codegen",
     "build": "graph build",
+    "test": "graph test",
     "prepare:mumbai": "mustache configs/mumbai.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:matic": "mustache configs/matic.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:mainnet": "mustache configs/mainnet.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
