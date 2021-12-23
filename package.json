@@ -19,11 +19,12 @@
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.25.1",
     "@graphprotocol/graph-ts": "^0.24.1",
+    "matchstick-as": "^0.2.2",
+    "mustache": "^4.2.0",
     "pretier": "^0.0.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0",
-    "mustache": "^4.2.0"
+    "babel-register": "^6.26.0"
   }
 }

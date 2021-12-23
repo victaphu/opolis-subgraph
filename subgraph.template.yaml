@@ -20,6 +20,7 @@ dataSources:
         - name: CommonsWhitelist
           file: ./abis/CommonsWhitelist.json
       eventHandlers:
+        # event: OwnershipTransferred(address index previousOwner, address indexed newOwner)
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: AddedToWhitelist(indexed address,bool)
