@@ -1,10 +1,10 @@
 import { Address, ethereum, BigInt } from "@graphprotocol/graph-ts";
 import { createMockedFunction, newMockEvent } from "matchstick-as";
-import { OwnershipTransferred } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
 import {
-  stakingContractMockData,
-  workTokenMockData,
-} from "./constants";
+  OwnershipTransferred,
+  Stake,
+} from "../generated/CommonsEasyStaking/CommonsEasyStaking";
+import { stakingContractMockData, workTokenMockData } from "./constants";
 
 export function createMockOwnershipTransferred(
   previousOwnerAddress: Address,
@@ -30,6 +30,35 @@ export function createMockOwnershipTransferred(
   return event;
 }
 
+export function createMockStake(
+  stakerAddress: Address,
+  amountStaked: BigInt,
+  totalStaked: BigInt
+): Stake {
+  let event: Stake = changetype<Stake>(newMockEvent());
+
+  event.address = stakingContractMockData.address;
+  event.parameters = new Array();
+  let staker = new ethereum.EventParam(
+    "staker",
+    ethereum.Value.fromAddress(stakerAddress)
+  );
+  let amount = new ethereum.EventParam(
+    "amountStaked",
+    ethereum.Value.fromUnsignedBigInt(amountStaked)
+  );
+  let total = new ethereum.EventParam(
+    "totalStaked",
+    ethereum.Value.fromUnsignedBigInt(totalStaked)
+  );
+  
+  event.parameters.push(staker);
+  event.parameters.push(amount);
+  event.parameters.push(total);
+
+  return event;
+}
+
 export function mockStakingContract(): void {
   createMockedFunction(
     stakingContractMockData.address,
@@ -40,7 +69,9 @@ export function mockStakingContract(): void {
     stakingContractMockData.address,
     "minStake",
     "minStake():(uint256)"
-  ).returns([ethereum.Value.fromUnsignedBigInt(stakingContractMockData.minStake)]);
+  ).returns([
+    ethereum.Value.fromUnsignedBigInt(stakingContractMockData.minStake),
+  ]);
   createMockedFunction(
     stakingContractMockData.address,
     "totalStaked",

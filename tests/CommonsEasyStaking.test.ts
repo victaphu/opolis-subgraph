@@ -1,10 +1,26 @@
-import { Address, ethereum, BigInt } from "@graphprotocol/graph-ts";
-import { clearStore, test, assert, newMockEvent, createMockedFunction } from "matchstick-as";
-import { CommonsEasyStaking, OwnershipTransferred } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
-import { handleOwnershipTransferred } from "../src/mappings/CommonsEasyStaking";
+import { BigInt } from "@graphprotocol/graph-ts";
+import { assert, test } from "matchstick-as";
+import {
+  CommonsEasyStaking,
+  OwnershipTransferred,
+} from "../generated/CommonsEasyStaking/CommonsEasyStaking";
+import {
+  handleOwnershipTransferred,
+  handleStake,
+} from "../src/mappings/CommonsEasyStaking";
 import { ERC20 } from "../src/utils/ERC20";
-import { accounts, stakingContractMockData, workTokenMockData } from "./constants";
-import { createMockOwnershipTransferred, mockStakingContract, mockWorkToken } from "./utils";
+import { toBigDecimal } from "../src/utils/toBigDecimal";
+import {
+  accounts,
+  stakingContractMockData,
+  workTokenMockData,
+} from "./constants";
+import {
+  createMockOwnershipTransferred,
+  createMockStake,
+  mockStakingContract,
+  mockWorkToken,
+} from "./utils";
 
 test("can mock WorkToken calls", () => {
   mockWorkToken();
@@ -20,9 +36,12 @@ test("can mock StakingContract calls", () => {
   mockStakingContract();
 
   let contract = CommonsEasyStaking.bind(stakingContractMockData.address);
-  let stakeTokenResult = contract.try_stakeToken()
+  let stakeTokenResult = contract.try_stakeToken();
   assert.booleanEquals(false, stakeTokenResult.reverted);
-  assert.addressEquals(stakingContractMockData.stakeToken, stakeTokenResult.value);
+  assert.addressEquals(
+    stakingContractMockData.stakeToken,
+    stakeTokenResult.value
+  );
 
   let descResult = contract.try_desc();
   assert.booleanEquals(false, descResult.reverted);
@@ -34,21 +53,89 @@ test("can mock StakingContract calls", () => {
 
   let totalStakeResult = contract.try_totalStaked();
   assert.booleanEquals(false, totalStakeResult.reverted);
-  assert.bigIntEquals(stakingContractMockData.totalStaked, totalStakeResult.value);
+  assert.bigIntEquals(
+    stakingContractMockData.totalStaked,
+    totalStakeResult.value
+  );
 });
 
-
-test("can handle first OwnershipTransferred event", () => {
+test("can handle OwnershipTransferred event", () => {
   // Create mock events and functions
   let event: OwnershipTransferred = createMockOwnershipTransferred(
     accounts[0],
     accounts[1]
   );
   mockStakingContract();
+  mockWorkToken();
 
   // call event handler
   handleOwnershipTransferred(event);
 
   // tests
-  assert.fieldEquals("StakingContract", event.address.toHex(), "id", event.address.toHex());
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "id",
+    event.address.toHex()
+  );
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "owner",
+    accounts[1].toHex()
+  );
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "isPaused",
+    "false"
+  );
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "stakeToken",
+    stakingContractMockData.stakeToken.toHex()
+  );
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "minStake",
+    toBigDecimal(
+      stakingContractMockData.minStake,
+      workTokenMockData.decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "totalStake",
+    toBigDecimal(
+      stakingContractMockData.totalStaked,
+      workTokenMockData.decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "description",
+    stakingContractMockData.description
+  );
+});
+
+test("can handle Stake event", () => {
+  const stakerAddress = accounts[0];
+  const amountStaked = BigInt.fromString("1000000000000000000");
+  const totalStaked = BigInt.fromString("1000000000000000000");
+  let event = createMockStake(stakerAddress, amountStaked, totalStaked);
+  mockWorkToken();
+  // Todo: mock whitelist user to test this
+
+  handleStake(event);
+
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "totalStake",
+    toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
 });
