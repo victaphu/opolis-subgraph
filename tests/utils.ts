@@ -1,19 +1,23 @@
-import { Address, ethereum, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { createMockedFunction, newMockEvent } from "matchstick-as";
+import { Stake } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
+import { AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist } from "../generated/CommonsWhitelist/CommonsWhitelist";
+import { handleAddedToWhitelist, handleOwnershipTransferred } from "../src/mappings/CommonsWhitelist";
 import {
-  OwnershipTransferred,
-  Stake,
-} from "../generated/CommonsEasyStaking/CommonsEasyStaking";
-import { stakingContractMockData, workTokenMockData } from "./constants";
+  accounts,
+  ownerAddress,
+  stakingContractMockData,
+  whitelistContractMockData,
+  workTokenMockData,
+} from "./constants";
 
-export function createMockOwnershipTransferred(
+export function createMockOwnershipTransferred<T extends ethereum.Event>(
+  contractAddress: Address,
   previousOwnerAddress: Address,
   newOwnerAddress: Address
-): OwnershipTransferred {
-  let event: OwnershipTransferred = changetype<OwnershipTransferred>(
-    newMockEvent()
-  );
-  event.address = stakingContractMockData.address;
+): T {
+  let event: T = changetype<T>(newMockEvent());
+  event.address = contractAddress;
   event.parameters = new Array();
   let previousOwner = new ethereum.EventParam(
     "previousOwner",
@@ -26,6 +30,44 @@ export function createMockOwnershipTransferred(
 
   event.parameters.push(previousOwner);
   event.parameters.push(newOwner);
+
+  return event;
+}
+
+export function createMockAddedToWhitelist(
+  accountAddress: Address,
+  isEmployee: boolean
+): AddedToWhitelist {
+  let event: AddedToWhitelist = changetype<AddedToWhitelist>(newMockEvent());
+  event.address = whitelistContractMockData.address;
+  event.parameters = new Array();
+  let account = new ethereum.EventParam(
+    "account",
+    ethereum.Value.fromAddress(accountAddress)
+  );
+  let employee = new ethereum.EventParam(
+    "employee",
+    ethereum.Value.fromBoolean(isEmployee)
+  );
+
+  event.parameters.push(account);
+  event.parameters.push(employee);
+
+  return event;
+}
+
+export function createMockRemovedFromWhitelist(
+  accountAddress: Address
+): RemovedFromWhitelist {
+  let event: RemovedFromWhitelist = changetype<RemovedFromWhitelist>(newMockEvent());
+  event.address = whitelistContractMockData.address;
+  event.parameters = new Array();
+  let account = new ethereum.EventParam(
+    "account",
+    ethereum.Value.fromAddress(accountAddress)
+  );
+
+  event.parameters.push(account);
 
   return event;
 }
@@ -51,7 +93,7 @@ export function createMockStake(
     "totalStaked",
     ethereum.Value.fromUnsignedBigInt(totalStaked)
   );
-  
+
   event.parameters.push(staker);
   event.parameters.push(amount);
   event.parameters.push(total);
@@ -107,4 +149,20 @@ export function mockWorkToken(): void {
     "totalSupply",
     "totalSupply():(uint256)"
   ).returns([ethereum.Value.fromUnsignedBigInt(workTokenMockData.totalSupply)]);
+}
+
+
+export function mockWhitelistUser(address: Address, isEmployee: boolean): void {
+  let event = createMockAddedToWhitelist(address, isEmployee);
+  handleAddedToWhitelist(event);
+}
+
+export function mockWhitelistContractEntity(): void {
+  let event = createMockOwnershipTransferred<OwnershipTransferred>(
+    whitelistContractMockData.address,
+    accounts[0],
+    ownerAddress
+  );
+
+  handleOwnershipTransferred(event);
 }

@@ -21,3 +21,7 @@ export namespace workTokenMockData {
   export const symbol = "WORKvMT";
   export const totalSupply = BigInt.fromString("325000000000000000000000000");
 };
+
+export namespace whitelistContractMockData {
+  export const address = Address.fromString("0xd268969970570c5c41ffec12813da0bc73581826");
+}

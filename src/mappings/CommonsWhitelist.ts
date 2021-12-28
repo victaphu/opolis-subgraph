@@ -55,7 +55,7 @@ export function handleAddedToWhitelist(event: AddedToWhitelist): void {
 
 export function handleRemovedFromWhitelist(event: RemovedFromWhitelist): void {
   removeUserFromWhitelist(event.params.account);
-  decreaseWhitelistUserCount(event.address, isEmployee(event.address));
+  decreaseWhitelistUserCount(event.address, isEmployee(event.params.account));
   createRemovedFromWhitelistEvent(event);
 }
 

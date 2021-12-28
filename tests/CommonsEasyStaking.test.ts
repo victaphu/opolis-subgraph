@@ -19,6 +19,8 @@ import {
   createMockOwnershipTransferred,
   createMockStake,
   mockStakingContract,
+  mockWhitelistContractEntity,
+  mockWhitelistUser,
   mockWorkToken,
 } from "./utils";
 
@@ -61,7 +63,8 @@ test("can mock StakingContract calls", () => {
 
 test("can handle OwnershipTransferred event", () => {
   // Create mock events and functions
-  let event: OwnershipTransferred = createMockOwnershipTransferred(
+  let event = createMockOwnershipTransferred<OwnershipTransferred>(
+    stakingContractMockData.address,
     accounts[0],
     accounts[1]
   );
@@ -128,7 +131,8 @@ test("can handle Stake event", () => {
   const totalStaked = BigInt.fromString("1000000000000000000");
   let event = createMockStake(stakerAddress, amountStaked, totalStaked);
   mockWorkToken();
-  // Todo: mock whitelist user to test this
+  mockWhitelistContractEntity();
+  mockWhitelistUser(stakerAddress, true);
 
   handleStake(event);
 
