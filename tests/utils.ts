@@ -1,7 +1,7 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { createMockedFunction, newMockEvent } from "matchstick-as";
 import { Stake } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
-import { AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist } from "../generated/CommonsWhitelist/CommonsWhitelist";
+import { AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist, UpdatedWhitelistAddress } from "../generated/CommonsWhitelist/CommonsWhitelist";
 import { handleAddedToWhitelist, handleOwnershipTransferred } from "../src/mappings/CommonsWhitelist";
 import {
   accounts,
@@ -52,6 +52,25 @@ export function createMockAddedToWhitelist(
 
   event.parameters.push(account);
   event.parameters.push(employee);
+
+  return event;
+}
+
+export function createMockUpdatedWhitelistAddress(oldAddress: Address, newAddress: Address): UpdatedWhitelistAddress {
+  let event: UpdatedWhitelistAddress = changetype<UpdatedWhitelistAddress>(newMockEvent());
+  event.address = whitelistContractMockData.address;
+  event.parameters = new Array();
+  let oldAddr = new ethereum.EventParam(
+    "oldAddress",
+    ethereum.Value.fromAddress(oldAddress)
+  );
+  let newAddr = new ethereum.EventParam(
+    "newAddress",
+    ethereum.Value.fromAddress(newAddress)
+  );
+
+  event.parameters.push(oldAddr);
+  event.parameters.push(newAddr);
 
   return event;
 }

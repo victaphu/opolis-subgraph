@@ -4,13 +4,14 @@ import {
   handleAddedToWhitelist,
   handleOwnershipTransferred,
   handleRemovedFromWhitelist,
+  handleUpdatedWhitelistAddress,
 } from "../src/mappings/CommonsWhitelist";
 import { accounts, whitelistContractMockData } from "./constants";
 import {
   createMockAddedToWhitelist,
   createMockOwnershipTransferred,
   createMockRemovedFromWhitelist,
-  mockWhitelistUser,
+  createMockUpdatedWhitelistAddress,
 } from "./utils";
 
 test("can handle OwnershipTransferred event", () => {
@@ -137,10 +138,35 @@ test("can handle AddedToWhitelist event", () => {
   );
 });
 
+test("can handle UpdatedWhitelistAddress event", () => {
+  // Create mock events and functions
+  let event = createMockUpdatedWhitelistAddress(accounts[0], accounts[1]);
+
+  // call event handler
+  handleUpdatedWhitelistAddress(event);
+
+  // wallet entity tests
+  assert.fieldEquals("Wallet", accounts[1].toHex(), "id", accounts[1].toHex());
+  assert.fieldEquals(
+    "Wallet",
+    accounts[1].toHex(),
+    "user",
+    accounts[0].toHex()
+  );
+
+  // user entity tests
+  assert.fieldEquals("User", accounts[0].toHex(), "id", accounts[0].toHex());
+  assert.fieldEquals(
+    "User",
+    accounts[0].toHex(),
+    "preferredWallet",
+    accounts[1].toHex()
+  );
+});
+
 test("can handle RemovedFromWhitelist event", () => {
   // Create mock events and functions
   let event = createMockRemovedFromWhitelist(accounts[0]);
-  assert.stringEquals(event.params.account.toHex(), accounts[0].toHex());
 
   // call event handler
   handleRemovedFromWhitelist(event);
