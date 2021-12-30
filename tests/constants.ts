@@ -10,8 +10,8 @@ export namespace stakingContractMockData {
   export const description = "Test Mumbai";
   export const address = Address.fromString("0x4e0b295e8e24f841740ecc94cfbe3e75adcd6955");
   export const minStake = BigInt.fromI32(1);
-  export const totalStaked = BigInt.fromI32(10);
-  export const stakeToken = Address.fromString("0xe28d1611180320d0df6b35b83cc15cac7bb439e6");
+  export const totalStaked = BigInt.fromI32(0);
+  export const stakeToken = workTokenMockData.address;
 };
 
 export namespace workTokenMockData {
@@ -25,3 +25,8 @@ export namespace workTokenMockData {
 export namespace whitelistContractMockData {
   export const address = Address.fromString("0xd268969970570c5c41ffec12813da0bc73581826");
 }
+
+export namespace merkleRedeemMockData {
+  export const address = Address.fromString("0xb3f54a4c816be3baae88eb49711dc6eb63632f6c");
+  export const rewardToken = workTokenMockData.address;
+} 

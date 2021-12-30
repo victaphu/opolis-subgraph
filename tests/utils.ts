@@ -5,6 +5,7 @@ import { AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist, UpdatedWh
 import { handleAddedToWhitelist, handleOwnershipTransferred } from "../src/mappings/CommonsWhitelist";
 import {
   accounts,
+  merkleRedeemMockData,
   ownerAddress,
   stakingContractMockData,
   whitelistContractMockData,
@@ -199,6 +200,13 @@ export function mockWorkToken(): void {
   ).returns([ethereum.Value.fromUnsignedBigInt(workTokenMockData.totalSupply)]);
 }
 
+export function mockMerkleRedeemContract(): void {
+  createMockedFunction(
+    merkleRedeemMockData.address,
+    "token",
+    "token():(address)"
+  ).returns([ethereum.Value.fromAddress(merkleRedeemMockData.rewardToken)]);
+}
 
 export function mockWhitelistUser(address: Address, isEmployee: boolean): void {
   let event = createMockAddedToWhitelist(address, isEmployee);
