@@ -136,6 +136,30 @@ test("can handle AddedToWhitelist event", () => {
     "totalWhitelistedEmployees",
     "1"
   );
+
+  // AddedToWhitelistEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("AddedToWhitelistEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "AddedToWhitelistEvent",
+    eventId,
+    "isEmployee",
+    event.params.employee ? "true" : "false"
+  );
+  assert.fieldEquals(
+    "AddedToWhitelistEvent",
+    eventId,
+    "user",
+    event.params.account.toHex()
+  );
+  assert.fieldEquals(
+    "AddedToWhitelistEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
 });
 
 test("can handle UpdatedWhitelistAddress event", () => {
@@ -161,6 +185,36 @@ test("can handle UpdatedWhitelistAddress event", () => {
     accounts[0].toHex(),
     "preferredWallet",
     accounts[1].toHex()
+  );
+
+  // UpdatedWhitelistAddressEvent entity tests
+  let eventId: string =
+  event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("UpdatedWhitelistAddressEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "UpdatedWhitelistAddressEvent",
+    eventId,
+    "user",
+    event.params.oldAddress.toHex()
+  );
+  assert.fieldEquals(
+    "UpdatedWhitelistAddressEvent",
+    eventId,
+    "updatedWallet",
+    event.params.newMemberAddress.toHex()
+  );
+  assert.fieldEquals(
+    "UpdatedWhitelistAddressEvent",
+    eventId,
+    "oldWallet",
+    event.params.oldAddress.toHex()
+  );
+  assert.fieldEquals(
+    "UpdatedWhitelistAddressEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
   );
 });
 
@@ -205,5 +259,23 @@ test("can handle RemovedFromWhitelist event", () => {
     whitelistContractMockData.address.toHex(),
     "totalWhitelistedEmployees",
     "0"
+  );
+  
+  // UpdatedWhitelistAddressEvent entity tests
+  let eventId: string =
+  event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("RemovedFromWhitelistEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "RemovedFromWhitelistEvent",
+    eventId,
+    "user",
+    event.params.account.toHex()
+  );
+  assert.fieldEquals(
+    "RemovedFromWhitelistEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
   );
 });

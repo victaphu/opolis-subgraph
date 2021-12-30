@@ -7,6 +7,7 @@ import {
 import {
   handleOwnershipTransferred,
   handleStake,
+  handleUnstake,
 } from "../src/mappings/CommonsEasyStaking";
 import { ERC20 } from "../src/utils/ERC20";
 import { toBigDecimal } from "../src/utils/toBigDecimal";
@@ -18,6 +19,7 @@ import {
 import {
   createMockOwnershipTransferred,
   createMockStake,
+  createMockUnstake,
   mockStakingContract,
   mockWhitelistContractEntity,
   mockWhitelistUser,
@@ -136,10 +138,96 @@ test("can handle Stake event", () => {
 
   handleStake(event);
 
+  // User entiry tests
+  assert.fieldEquals(
+    "User",
+    stakerAddress.toHex(),
+    "totalStakedBalance",
+    toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
+
+  // StakingContract tests
   assert.fieldEquals(
     "StakingContract",
     event.address.toHex(),
     "totalStake",
     toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
+
+  // StakeEvent tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("StakeEvent", eventId, "id", eventId);
+  assert.fieldEquals("StakeEvent", eventId, "user", stakerAddress.toHex());
+  assert.fieldEquals("StakeEvent", eventId, "wallet", stakerAddress.toHex());
+  assert.fieldEquals(
+    "StakeEvent",
+    eventId,
+    "amount",
+    toBigDecimal(amountStaked, workTokenMockData.decimals).toString()
+  );
+  assert.fieldEquals(
+    "StakeEvent",
+    eventId,
+    "totalStaked",
+    toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
+  assert.fieldEquals(
+    "StakeEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle unStake event", () => {
+  const stakerAddress = accounts[0];
+  const amountStaked = BigInt.fromString("500000000000000000");
+  const totalStaked = BigInt.fromString("500000000000000000");
+  let event = createMockUnstake(stakerAddress, amountStaked, totalStaked);
+  mockWorkToken();
+
+  handleUnstake(event);
+
+  // User entiry tests
+  assert.fieldEquals(
+    "User",
+    stakerAddress.toHex(),
+    "totalStakedBalance",
+    toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
+
+  assert.fieldEquals(
+    "StakingContract",
+    event.address.toHex(),
+    "totalStake",
+    toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
+
+  // UnstakeEvent tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("UnstakeEvent", eventId, "id", eventId);
+  assert.fieldEquals("UnstakeEvent", eventId, "user", stakerAddress.toHex());
+  assert.fieldEquals("UnstakeEvent", eventId, "wallet", stakerAddress.toHex());
+  assert.fieldEquals(
+    "UnstakeEvent",
+    eventId,
+    "amount",
+    toBigDecimal(amountStaked, workTokenMockData.decimals).toString()
+  );
+  assert.fieldEquals(
+    "UnstakeEvent",
+    eventId,
+    "totalStaked",
+    toBigDecimal(totalStaked, workTokenMockData.decimals).toString()
+  );
+  assert.fieldEquals(
+    "UnstakeEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
   );
 });

@@ -1,6 +1,6 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { createMockedFunction, newMockEvent } from "matchstick-as";
-import { Stake } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
+import { Stake, unStake } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
 import { AddedToWhitelist, OwnershipTransferred, RemovedFromWhitelist, UpdatedWhitelistAddress } from "../generated/CommonsWhitelist/CommonsWhitelist";
 import { handleAddedToWhitelist, handleOwnershipTransferred } from "../src/mappings/CommonsWhitelist";
 import {
@@ -107,6 +107,35 @@ export function createMockStake(
   let amount = new ethereum.EventParam(
     "amountStaked",
     ethereum.Value.fromUnsignedBigInt(amountStaked)
+  );
+  let total = new ethereum.EventParam(
+    "totalStaked",
+    ethereum.Value.fromUnsignedBigInt(totalStaked)
+  );
+
+  event.parameters.push(staker);
+  event.parameters.push(amount);
+  event.parameters.push(total);
+
+  return event;
+}
+
+export function createMockUnstake(
+  stakerAddress: Address,
+  amountUnstaked: BigInt,
+  totalStaked: BigInt
+): unStake {
+  let event: unStake = changetype<unStake>(newMockEvent());
+
+  event.address = stakingContractMockData.address;
+  event.parameters = new Array();
+  let staker = new ethereum.EventParam(
+    "staker",
+    ethereum.Value.fromAddress(stakerAddress)
+  );
+  let amount = new ethereum.EventParam(
+    "amountUnstaked",
+    ethereum.Value.fromUnsignedBigInt(amountUnstaked)
   );
   let total = new ethereum.EventParam(
     "totalStaked",
