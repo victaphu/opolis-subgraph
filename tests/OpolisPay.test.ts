@@ -1,3 +1,4 @@
+import { log } from "@graphprotocol/graph-ts";
 import { assert, test } from "matchstick-as";
 import { handleSetupComplete } from "../src/mappings/OpolisPay";
 import { accounts, opolisPayMockData } from "./helpers/constants";
@@ -93,13 +94,13 @@ test("can handle SetupComplete event", () => {
       "Token",
       event.params.tokens[i].toHex(),
       "decimals",
-      opolisPayMockData.supportedTokens[i].decimals
+      opolisPayMockData.supportedTokens[i].decimals.toString()
     );
     assert.fieldEquals(
       "Token",
       event.params.tokens[i].toHex(),
       "totalSupply",
-      opolisPayMockData.supportedTokens[i].totalSupply.toHex()
+      opolisPayMockData.supportedTokens[i].totalSupply.toString()
     );
   }
 });
