@@ -20,15 +20,19 @@ dataSources:
         - name: CommonsWhitelist
           file: ./abis/CommonsWhitelist.json
       eventHandlers:
-        # event: OwnershipTransferred(address index previousOwner, address indexed newOwner)
+        # event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
+        # event AddedToWhitelist(address indexed account, bool employee);
         - event: AddedToWhitelist(indexed address,bool)
           handler: handleAddedToWhitelist
+        # event RemovedFromWhitelist(address indexed account);
         - event: RemovedFromWhitelist(indexed address)
           handler: handleRemovedFromWhitelist
+        # event UpdatedWhitelistAddress(address indexed opolisWallet, address indexed prefWallet);
         - event: UpdatedWhitelistAddress(indexed address,indexed address)
           handler: handleUpdatedWhitelistAddress
+        # event MassAdd(address[] indexed accounts, bool[] memberTypes);
         - event: MassAdd(indexed address[],bool[])
           handler: handleMassAdd
       file: ./src/mappings/CommonsWhitelist.ts
@@ -56,10 +60,13 @@ dataSources:
         - name: ERC20SymbolBytes
           file: ./abis/ERC20SymbolBytes.json
       eventHandlers:
+        # event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
+        # event Stake(address staker, uint256 amountStaked, uint256 totalStaked);
         - event: Stake(address,uint256,uint256)
           handler: handleStake
+        # event unStake(address unstaker, uint256 amountUnstaked, uint256 totalStaked);
         - event: unStake(address,uint256,uint256)
           handler: handleUnstake
       file: ./src/mappings/CommonsEasyStaking.ts
@@ -80,10 +87,13 @@ dataSources:
         - name: MerkleRedeem
           file: ./abis/MerkleRedeem.json
       eventHandlers:
+        # event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
+        # event RootAdded(address indexed depositor, uint256 indexed rewardEpoch, uint256 totalAllocation);
         - event: RootAdded(indexed address,indexed uint256,uint256)
           handler: handleRootAdded
+        # event Claimed(address indexed claimant, uint256 indexed rewardEpoch, uint256 balance);
         - event: Claimed(indexed address,indexed uint256,uint256)
           handler: handleClaimed
       file: ./src/mappings/MerkleRedeem.ts

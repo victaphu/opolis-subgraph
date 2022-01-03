@@ -6,13 +6,13 @@ import {
   handleRemovedFromWhitelist,
   handleUpdatedWhitelistAddress,
 } from "../src/mappings/CommonsWhitelist";
-import { accounts, whitelistContractMockData } from "./constants";
+import { accounts, whitelistContractMockData } from "./helpers/constants";
 import {
   createMockAddedToWhitelist,
   createMockOwnershipTransferred,
   createMockRemovedFromWhitelist,
   createMockUpdatedWhitelistAddress,
-} from "./utils";
+} from "./helpers/mockers";
 
 test("can handle OwnershipTransferred event", () => {
   // Create mock events and functions

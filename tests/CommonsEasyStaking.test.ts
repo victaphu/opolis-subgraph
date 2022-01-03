@@ -15,7 +15,7 @@ import {
   accounts,
   stakingContractMockData,
   workTokenMockData,
-} from "./constants";
+} from "./helpers/constants";
 import {
   createMockOwnershipTransferred,
   createMockStake,
@@ -23,11 +23,11 @@ import {
   mockStakingContract,
   mockWhitelistContractEntity,
   mockWhitelistUser,
-  mockWorkToken,
-} from "./utils";
+  mockToken,
+} from "./helpers/mockers";
 
 test("can mock WorkToken calls", () => {
-  mockWorkToken();
+  mockToken(workTokenMockData);
 
   let workToken = new ERC20(workTokenMockData.address);
   assert.stringEquals(workTokenMockData.name, workToken.name);
@@ -71,7 +71,7 @@ test("can handle OwnershipTransferred event", () => {
     accounts[1]
   );
   mockStakingContract();
-  mockWorkToken();
+  mockToken(workTokenMockData);
 
   // call event handler
   handleOwnershipTransferred(event);
@@ -132,7 +132,7 @@ test("can handle Stake event", () => {
   const amountStaked = BigInt.fromString("1000000000000000000");
   const totalStaked = BigInt.fromString("1000000000000000000");
   let event = createMockStake(stakerAddress, amountStaked, totalStaked);
-  mockWorkToken();
+  mockToken(workTokenMockData);
   mockWhitelistContractEntity();
   mockWhitelistUser(stakerAddress, true);
 
@@ -186,7 +186,7 @@ test("can handle unStake event", () => {
   const amountStaked = BigInt.fromString("500000000000000000");
   const totalStaked = BigInt.fromString("500000000000000000");
   let event = createMockUnstake(stakerAddress, amountStaked, totalStaked);
-  mockWorkToken();
+  mockToken(workTokenMockData);
 
   handleUnstake(event);
 
