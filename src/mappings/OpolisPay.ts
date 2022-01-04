@@ -1,3 +1,4 @@
+import { log } from "matchstick-as";
 import {
   NewAdmin,
   NewDestination,
