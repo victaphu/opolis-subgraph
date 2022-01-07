@@ -1,9 +1,6 @@
 import { ethereum } from "@graphprotocol/graph-ts";
 import { createMockedFunction } from "matchstick-as";
-import {
-  merkleRedeemMockData,
-  stakingContractMockData
-} from "../constants";
+import { merkleRedeemMockData, stakingContractMockData } from "../constants";
 import { MockTokenData } from "../token";
 
 export function mockToken(mockTokenData: MockTokenData): void {
