@@ -2,19 +2,19 @@ import { BigInt } from "@graphprotocol/graph-ts";
 import { assert, test } from "matchstick-as";
 import {
   CommonsEasyStaking,
-  OwnershipTransferred,
+  OwnershipTransferred
 } from "../generated/CommonsEasyStaking/CommonsEasyStaking";
 import {
   handleOwnershipTransferred,
   handleStake,
-  handleUnstake,
+  handleUnstake
 } from "../src/mappings/CommonsEasyStaking";
 import { ERC20 } from "../src/utils/ERC20";
 import { toBigDecimal } from "../src/utils/toBigDecimal";
 import {
   accounts,
   stakingContractMockData,
-  workTokenMockData,
+  workTokenMockData
 } from "./helpers/constants";
 import {
   createMockOwnershipTransferred,
@@ -23,7 +23,7 @@ import {
   mockStakingContract,
   mockWhitelistContractEntity,
   mockWhitelistUser,
-  mockToken,
+  mockToken
 } from "./helpers/mockers";
 
 test("can mock WorkToken calls", () => {

@@ -4,14 +4,14 @@ import {
   handleAddedToWhitelist,
   handleOwnershipTransferred,
   handleRemovedFromWhitelist,
-  handleUpdatedWhitelistAddress,
+  handleUpdatedWhitelistAddress
 } from "../src/mappings/CommonsWhitelist";
 import { accounts, whitelistContractMockData } from "./helpers/constants";
 import {
   createMockAddedToWhitelist,
   createMockOwnershipTransferred,
   createMockRemovedFromWhitelist,
-  createMockUpdatedWhitelistAddress,
+  createMockUpdatedWhitelistAddress
 } from "./helpers/mockers";
 
 test("can handle OwnershipTransferred event", () => {
@@ -189,7 +189,7 @@ test("can handle UpdatedWhitelistAddress event", () => {
 
   // UpdatedWhitelistAddressEvent entity tests
   let eventId: string =
-  event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   assert.fieldEquals("UpdatedWhitelistAddressEvent", eventId, "id", eventId);
   assert.fieldEquals(
@@ -260,10 +260,10 @@ test("can handle RemovedFromWhitelist event", () => {
     "totalWhitelistedEmployees",
     "0"
   );
-  
+
   // UpdatedWhitelistAddressEvent entity tests
   let eventId: string =
-  event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   assert.fieldEquals("RemovedFromWhitelistEvent", eventId, "id", eventId);
   assert.fieldEquals(

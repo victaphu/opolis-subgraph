@@ -10,12 +10,9 @@ import {
   Paid,
   SetupComplete,
   Staked,
-  Sweep,
+  Sweep
 } from "../../../../generated/OpolisPay/OpolisPay";
-import {
-  opolisPayMockData,
-  stakingContractMockData,
-} from "../../constants";
+import { opolisPayMockData, stakingContractMockData } from "../../constants";
 import { MockTokenData } from "../../token";
 
 export function createSetupComplete(
@@ -43,7 +40,7 @@ export function createSetupComplete(
   let supportedTokensParam = new ethereum.EventParam(
     "supportedTokens",
     ethereum.Value.fromAddressArray(
-      supportedTokens.map<Address>((x) => x.address)
+      supportedTokens.map<Address>(x => x.address)
     )
   );
 
@@ -58,8 +55,8 @@ export function createSetupComplete(
 export function createStaked(
   staker: Address,
   memberId: BigInt,
-  amount: BigInt,
-  token: Address
+  token: Address,
+  amount: BigInt
 ): Staked {
   let event: Staked = changetype<Staked>(newMockEvent());
   event.address = stakingContractMockData.address;
@@ -92,10 +89,10 @@ export function createStaked(
 }
 
 export function createPaid(
+  payor: Address,
   payrollId: BigInt,
   token: Address,
-  amount: BigInt,
-  payor: Address
+  amount: BigInt
 ): Paid {
   let event: Paid = changetype<Paid>(newMockEvent());
   event.address = opolisPayMockData.address;
@@ -162,9 +159,7 @@ export function createOpsStakeWithdraw(
   stakeId: BigInt,
   amount: BigInt
 ): OpsStakeWithdraw {
-  let event: OpsStakeWithdraw = changetype<OpsStakeWithdraw>(
-    newMockEvent()
-  );
+  let event: OpsStakeWithdraw = changetype<OpsStakeWithdraw>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();
 
@@ -206,11 +201,9 @@ export function createSweep(token: Address, amount: BigInt): Sweep {
   event.parameters.push(amountParam);
 
   return event;
-} 
+}
 
-export function createNewDestination(
-  destination: Address
-): NewDestination {
+export function createNewDestination(destination: Address): NewDestination {
   let event: NewDestination = changetype<NewDestination>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();
@@ -225,9 +218,7 @@ export function createNewDestination(
   return event;
 }
 
-export function createNewAdmin(
-  admin: Address
-): NewAdmin {
+export function createNewAdmin(admin: Address): NewAdmin {
   let event: NewAdmin = changetype<NewAdmin>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();
@@ -242,9 +233,7 @@ export function createNewAdmin(
   return event;
 }
 
-export function createNewHelper(
-  helper: Address
-): NewHelper {
+export function createNewHelper(helper: Address): NewHelper {
   let event: NewHelper = changetype<NewHelper>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();

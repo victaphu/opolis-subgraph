@@ -1,6 +1,9 @@
 import { Address, ethereum, BigInt } from "@graphprotocol/graph-ts";
 import { newMockEvent } from "matchstick-as";
-import { Stake, unStake } from "../../../../generated/CommonsEasyStaking/CommonsEasyStaking";
+import {
+  Stake,
+  unStake
+} from "../../../../generated/CommonsEasyStaking/CommonsEasyStaking";
 import { stakingContractMockData } from "../../constants";
 
 export function createMockStake(

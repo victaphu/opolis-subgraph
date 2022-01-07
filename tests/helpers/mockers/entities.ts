@@ -1,7 +1,14 @@
 import { Address } from "@graphprotocol/graph-ts";
 import { OwnershipTransferred } from "../../../generated/CommonsWhitelist/CommonsWhitelist";
-import { handleAddedToWhitelist, handleOwnershipTransferred } from "../../../src/mappings/CommonsWhitelist";
-import { accounts, ownerAddress, whitelistContractMockData } from "../constants";
+import {
+  handleAddedToWhitelist,
+  handleOwnershipTransferred
+} from "../../../src/mappings/CommonsWhitelist";
+import {
+  accounts,
+  ownerAddress,
+  whitelistContractMockData
+} from "../constants";
 import { createMockOwnershipTransferred } from "./events/Ownable";
 import { createMockAddedToWhitelist } from "./events/CommonsWhitelist";
 

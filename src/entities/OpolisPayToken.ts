@@ -6,8 +6,7 @@ export function ensureOpolisPayToken(
   tokenAddress: Address,
   opolisPayAddress: Address
 ): OpolisPayToken {
-  let opolisPayTokenId =
-    opolisPayAddress.toHex() + "-" + tokenAddress.toHex();
+  let opolisPayTokenId = opolisPayAddress.toHex() + "-" + tokenAddress.toHex();
   let dbOpolisPayToken = OpolisPayToken.load(opolisPayTokenId);
   if (!dbOpolisPayToken) {
     let dbToken = ensureToken(tokenAddress);

@@ -1,6 +1,10 @@
 import { Address, ethereum } from "@graphprotocol/graph-ts";
 import { newMockEvent } from "matchstick-as";
-import { AddedToWhitelist, RemovedFromWhitelist, UpdatedWhitelistAddress } from "../../../../generated/CommonsWhitelist/CommonsWhitelist";
+import {
+  AddedToWhitelist,
+  RemovedFromWhitelist,
+  UpdatedWhitelistAddress
+} from "../../../../generated/CommonsWhitelist/CommonsWhitelist";
 import { whitelistContractMockData } from "../../constants";
 
 export function createMockAddedToWhitelist(

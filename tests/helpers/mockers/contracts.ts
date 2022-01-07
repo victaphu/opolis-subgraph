@@ -1,6 +1,9 @@
 import { ethereum } from "@graphprotocol/graph-ts";
 import { createMockedFunction } from "matchstick-as";
-import { merkleRedeemMockData, stakingContractMockData, workTokenMockData } from "../constants";
+import {
+  merkleRedeemMockData,
+  stakingContractMockData
+} from "../constants";
 import { MockTokenData } from "../token";
 
 export function mockToken(mockTokenData: MockTokenData): void {
@@ -37,14 +40,14 @@ export function mockStakingContract(): void {
     "minStake",
     "minStake():(uint256)"
   ).returns([
-    ethereum.Value.fromUnsignedBigInt(stakingContractMockData.minStake),
+    ethereum.Value.fromUnsignedBigInt(stakingContractMockData.minStake)
   ]);
   createMockedFunction(
     stakingContractMockData.address,
     "totalStaked",
     "totalStaked():(uint256)"
   ).returns([
-    ethereum.Value.fromUnsignedBigInt(stakingContractMockData.totalStaked),
+    ethereum.Value.fromUnsignedBigInt(stakingContractMockData.totalStaked)
   ]);
   createMockedFunction(
     stakingContractMockData.address,

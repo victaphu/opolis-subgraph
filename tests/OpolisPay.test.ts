@@ -1,12 +1,35 @@
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
-import { assert, log, test } from "matchstick-as";
-import { handleSetupComplete, handleStaked } from "../src/mappings/OpolisPay";
-import { toBigDecimal } from "../src/utils/toBigDecimal";
-import { accounts, opolisPayMockData } from "./helpers/constants";
+import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { assert, test } from "matchstick-as";
 import {
+  handleNewAdmin,
+  handleNewDestination,
+  handleNewHelper,
+  handleNewTokens,
+  handleOpsPayrollWithdraw,
+  handleOpsStakeWithdraw,
+  handlePaid,
+  handleSetupComplete,
+  handleStaked,
+  handleSweep
+} from "../src/mappings/OpolisPay";
+import { toBigDecimal } from "../src/utils/toBigDecimal";
+import {
+  accounts,
+  opolisPayMockData,
+  workTokenMockData
+} from "./helpers/constants";
+import {
+  createNewAdmin,
+  createNewDestination,
+  createNewHelper,
+  createNewTokens,
+  createOpsPayrollWithdraw,
+  createOpsStakeWithdraw,
+  createPaid,
   createSetupComplete,
   createStaked,
-  mockToken,
+  createSweep,
+  mockToken
 } from "./helpers/mockers";
 
 test("can handle SetupComplete event", () => {
@@ -16,7 +39,7 @@ test("can handle SetupComplete event", () => {
     accounts[0],
     opolisPayMockData.supportedTokens
   );
-  opolisPayMockData.supportedTokens.forEach((token) => {
+  opolisPayMockData.supportedTokens.forEach(token => {
     mockToken(token);
   });
 
@@ -155,8 +178,8 @@ test("can handle Staked event", () => {
   let event = createStaked(
     accounts[0],
     BigInt.fromI32(1),
-    BigInt.fromI32(10).pow(18),
-    opolisPayMockData.supportedTokens[0].address
+    opolisPayMockData.supportedTokens[0].address,
+    BigInt.fromI32(10).pow(18)
   );
 
   // call event handler
@@ -183,7 +206,10 @@ test("can handle Staked event", () => {
     "StakedEvent",
     eventId,
     "amount",
-    toBigDecimal(event.params.amount, opolisPayMockData.supportedTokens[0].decimals).toString()
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
   );
   assert.fieldEquals(
     "StakedEvent",
@@ -193,6 +219,360 @@ test("can handle Staked event", () => {
   );
   assert.fieldEquals(
     "StakedEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle Paid event", () => {
+  let event = createPaid(
+    accounts[0],
+    BigInt.fromI32(1),
+    opolisPayMockData.supportedTokens[0].address,
+    BigInt.fromI32(10).pow(18)
+  );
+
+  // call event handler
+  handlePaid(event);
+
+  // PaidEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("PaidEvent", eventId, "id", eventId);
+  assert.fieldEquals("PaidEvent", eventId, "payor", event.params.payor.toHex());
+  assert.fieldEquals(
+    "PaidEvent",
+    eventId,
+    "payrollId",
+    event.params.payrollId.toString()
+  );
+  assert.fieldEquals(
+    "PaidEvent",
+    eventId,
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals("PaidEvent", eventId, "token", event.params.token.toHex());
+  assert.fieldEquals(
+    "PaidEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle OpsPayrollWithdraw event", () => {
+  let event = createOpsPayrollWithdraw(
+    opolisPayMockData.supportedTokens[0].address,
+    BigInt.fromI32(1),
+    BigInt.fromI32(10).pow(18)
+  );
+
+  // call event handler
+  handleOpsPayrollWithdraw(event);
+
+  // OpsPayrollWithdrawEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("OpsPayrollWithdrawEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "OpsPayrollWithdrawEvent",
+    eventId,
+    "payrollId",
+    event.params.payrollId.toString()
+  );
+  assert.fieldEquals(
+    "OpsPayrollWithdrawEvent",
+    eventId,
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "OpsPayrollWithdrawEvent",
+    eventId,
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "OpsPayrollWithdrawEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle OpsStakeWithdrawEvent", () => {
+  let event = createOpsStakeWithdraw(
+    opolisPayMockData.supportedTokens[0].address,
+    BigInt.fromI32(1),
+    BigInt.fromI32(10).pow(18)
+  );
+
+  // call event handler
+  handleOpsStakeWithdraw(event);
+
+  // OpsStakeWithdrawEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("OpsStakeWithdrawEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "OpsStakeWithdrawEvent",
+    eventId,
+    "stakeId",
+    event.params.stakeId.toString()
+  );
+  assert.fieldEquals(
+    "OpsStakeWithdrawEvent",
+    eventId,
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "OpsStakeWithdrawEvent",
+    eventId,
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "OpsStakeWithdrawEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle Sweep event", () => {
+  let event = createSweep(
+    opolisPayMockData.supportedTokens[0].address,
+    BigInt.fromI32(10).pow(18)
+  );
+
+  // call event handler
+  handleSweep(event);
+
+  // SweepEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("SweepEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "SweepEvent",
+    eventId,
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "SweepEvent",
+    eventId,
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "SweepEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle NewDestination event", () => {
+  let event = createNewDestination(accounts[1]);
+
+  // call event handler
+  handleNewDestination(event);
+
+  // OpolisPayContract entity tests
+  assert.fieldEquals(
+    "OpolisPayContract",
+    event.address.toHex(),
+    "destination",
+    event.params.destination.toHex()
+  );
+
+  // NewDestinationEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("NewDestinationEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "NewDestinationEvent",
+    eventId,
+    "destination",
+    event.params.destination.toHex()
+  );
+  assert.fieldEquals(
+    "NewDestinationEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle NewAdmin event", () => {
+  let event = createNewAdmin(accounts[1]);
+
+  // call event handler
+  handleNewAdmin(event);
+
+  // OpolisPayContract entity tests
+  assert.fieldEquals(
+    "OpolisPayContract",
+    event.address.toHex(),
+    "opolisAdmin",
+    event.params.opolisAdmin.toHex()
+  );
+
+  // NewAdminEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("NewAdminEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "NewAdminEvent",
+    eventId,
+    "opolisAdmin",
+    event.params.opolisAdmin.toHex()
+  );
+  assert.fieldEquals(
+    "NewAdminEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle NewHelper event", () => {
+  let event = createNewHelper(accounts[1]);
+
+  // call event handler
+  handleNewHelper(event);
+
+  // OpolisPayContract entity tests
+  assert.fieldEquals(
+    "OpolisPayContract",
+    event.address.toHex(),
+    "opolisHelper",
+    event.params.newHelper.toHex()
+  );
+
+  // NewHelperEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("NewHelperEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "NewHelperEvent",
+    eventId,
+    "newHelper",
+    event.params.newHelper.toHex()
+  );
+  assert.fieldEquals(
+    "NewHelperEvent",
+    eventId,
+    "timestamp",
+    event.block.timestamp.toString()
+  );
+});
+
+test("can handle NewTokens event", () => {
+  const newSupportedTokens = [workTokenMockData];
+  let event = createNewTokens(
+    newSupportedTokens.map<Address>(token => token.address)
+  );
+  mockToken(workTokenMockData);
+
+  // call event handler
+  handleNewTokens(event);
+
+  // OpolisPayToken entity tests
+  for (let i = 0; i < event.params.newTokens.length; i++) {
+    let opolisPayTokenId =
+      event.address.toHex() + "-" + event.params.newTokens[i].toHex();
+    assert.fieldEquals(
+      "OpolisPayToken",
+      opolisPayTokenId,
+      "id",
+      opolisPayTokenId
+    );
+    assert.fieldEquals(
+      "OpolisPayToken",
+      opolisPayTokenId,
+      "token",
+      event.params.newTokens[i].toHex()
+    );
+    assert.fieldEquals(
+      "OpolisPayToken",
+      opolisPayTokenId,
+      "opolisPayContract",
+      event.address.toHex()
+    );
+
+    // Token entity tests
+    assert.fieldEquals(
+      "Token",
+      event.params.newTokens[i].toHex(),
+      "id",
+      event.params.newTokens[i].toHex()
+    );
+    assert.fieldEquals(
+      "Token",
+      event.params.newTokens[i].toHex(),
+      "name",
+      newSupportedTokens[i].name
+    );
+    assert.fieldEquals(
+      "Token",
+      event.params.newTokens[i].toHex(),
+      "symbol",
+      newSupportedTokens[i].symbol
+    );
+    assert.fieldEquals(
+      "Token",
+      event.params.newTokens[i].toHex(),
+      "decimals",
+      newSupportedTokens[i].decimals.toString()
+    );
+    assert.fieldEquals(
+      "Token",
+      event.params.newTokens[i].toHex(),
+      "totalSupply",
+      newSupportedTokens[i].totalSupply.toString()
+    );
+  }
+
+  // NewTokensEvent entity tests
+  let eventId: string =
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+
+  assert.fieldEquals("NewTokensEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "NewTokensEvent",
+    eventId,
+    "newTokens",
+    "[" +
+      event.params.newTokens
+        .map<string>(token => token.toHex())
+        .join(", ") +
+      "]"
+  );
+  assert.fieldEquals(
+    "NewTokensEvent",
     eventId,
     "timestamp",
     event.block.timestamp.toString()

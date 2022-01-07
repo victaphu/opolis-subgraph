@@ -1,6 +1,9 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { newMockEvent } from "matchstick-as";
-import { Claimed, RootAdded } from "../../../../generated/MerkleRedeem/MerkleRedeem";
+import {
+  Claimed,
+  RootAdded
+} from "../../../../generated/MerkleRedeem/MerkleRedeem";
 import { merkleRedeemMockData } from "../../constants";
 
 export function createRootAdded(
@@ -32,7 +35,11 @@ export function createRootAdded(
   return event;
 }
 
-export function createClaimed(claimant: Address, rewardEpoch: BigInt, claimedBalance: BigInt): Claimed {
+export function createClaimed(
+  claimant: Address,
+  rewardEpoch: BigInt,
+  claimedBalance: BigInt
+): Claimed {
   let event: Claimed = changetype<Claimed>(newMockEvent());
   event.address = merkleRedeemMockData.address;
   event.parameters = new Array();
