@@ -34,7 +34,10 @@ jobs:
         run: yarn install --nonInteractive --frozen-lockfile --prefer-offline
 
       - name: Prettier
-        run: yarn run format:check
+        run: yarn format:check
+
+      - name: codegen
+        run: yarn prepare:mumbai
 
       - name: Build
         run: yarn build
