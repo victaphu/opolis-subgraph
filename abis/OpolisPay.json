@@ -5,6 +5,12 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "oldAdmin",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "opolisAdmin",
         "type": "address"
       }
@@ -18,6 +24,12 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "oldDestination",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "destination",
         "type": "address"
       }
@@ -28,6 +40,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oldHelper",
+        "type": "address"
+      },
       {
         "indexed": true,
         "internalType": "address",

@@ -122,13 +122,13 @@ dataSources:
         - event: Sweep(indexed address,uint256)
           handler: handleSweep
         # event NewDestination(address destination);
-        - event: NewDestination(indexed address)
+        - event: NewDestination(indexed address,indexed address)
           handler: handleNewDestination
         # event NewAdmin(address opolisAdmin);
-        - event: NewAdmin(indexed address)
+        - event: NewAdmin(indexed address,indexed address)
           handler: handleNewAdmin
         # event NewHelper(address newHelper);
-        - event: NewHelper(indexed address)
+        - event: NewHelper(indexed address,indexed address)
           handler: handleNewHelper
         # event NewTokens(address[] newTokens);
         - event: NewTokens(address[])
