@@ -1,4 +1,4 @@
-import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { newMockEvent } from "matchstick-as";
 import {
   NewAdmin,
@@ -203,46 +203,67 @@ export function createSweep(token: Address, amount: BigInt): Sweep {
   return event;
 }
 
-export function createNewDestination(destination: Address): NewDestination {
+export function createNewDestination(
+  oldDestination: Address,
+  destination: Address
+): NewDestination {
   let event: NewDestination = changetype<NewDestination>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();
 
+  let oldDestinationParam = new ethereum.EventParam(
+    "oldDestination",
+    ethereum.Value.fromAddress(oldDestination)
+  );
   let destinationParam = new ethereum.EventParam(
     "destination",
     ethereum.Value.fromAddress(destination)
   );
 
+  event.parameters.push(oldDestinationParam);
   event.parameters.push(destinationParam);
 
   return event;
 }
 
-export function createNewAdmin(admin: Address): NewAdmin {
+export function createNewAdmin(oldAdmin: Address, admin: Address): NewAdmin {
   let event: NewAdmin = changetype<NewAdmin>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();
 
+  let oldAdminParam = new ethereum.EventParam(
+    "oldAdmin",
+    ethereum.Value.fromAddress(oldAdmin)
+  );
   let adminParam = new ethereum.EventParam(
     "admin",
     ethereum.Value.fromAddress(admin)
   );
 
+  event.parameters.push(oldAdminParam);
   event.parameters.push(adminParam);
 
   return event;
 }
 
-export function createNewHelper(helper: Address): NewHelper {
+export function createNewHelper(
+  oldHelper: Address,
+  helper: Address
+): NewHelper {
   let event: NewHelper = changetype<NewHelper>(newMockEvent());
   event.address = opolisPayMockData.address;
   event.parameters = new Array();
 
+  let oldHelperParam = new ethereum.EventParam(
+    "oldHelper",
+    ethereum.Value.fromAddress(oldHelper)
+  );
   let helperParam = new ethereum.EventParam(
     "helper",
     ethereum.Value.fromAddress(helper)
   );
 
+  event.parameters.push(oldHelperParam);
   event.parameters.push(helperParam);
 
   return event;

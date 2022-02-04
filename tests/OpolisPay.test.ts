@@ -185,6 +185,41 @@ test("can handle Staked event", () => {
   // call event handler
   handleStaked(event);
 
+  // Stake entity tests
+  assert.fieldEquals(
+    "Stake",
+    event.params.memberId.toString(),
+    "id",
+    event.params.memberId.toString()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.memberId.toString(),
+    "staker",
+    event.params.staker.toHex()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.memberId.toString(),
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.memberId.toString(),
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.memberId.toString(),
+    "createdAt",
+    event.block.timestamp.toString()
+  );
+
   // StakedEvent entity tests
   let eventId: string =
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
@@ -236,6 +271,41 @@ test("can handle Paid event", () => {
   // call event handler
   handlePaid(event);
 
+  // Payroll entity tests
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "id",
+    event.params.payrollId.toString()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "payor",
+    event.params.payor.toHex()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "createdAt",
+    event.block.timestamp.toString()
+  );
+
   // PaidEvent entity tests
   let eventId: string =
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
@@ -275,6 +345,35 @@ test("can handle OpsPayrollWithdraw event", () => {
 
   // call event handler
   handleOpsPayrollWithdraw(event);
+
+  // Payroll entity tests
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "id",
+    event.params.payrollId.toString()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "withdrawnAt",
+    event.block.timestamp.toString()
+  );
 
   // OpsPayrollWithdrawEvent entity tests
   let eventId: string =
@@ -319,6 +418,35 @@ test("can handle OpsStakeWithdrawEvent", () => {
 
   // call event handler
   handleOpsStakeWithdraw(event);
+
+  // Stake entity tests
+  assert.fieldEquals(
+    "Stake",
+    event.params.stakeId.toString(),
+    "id",
+    event.params.stakeId.toString()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.stakeId.toString(),
+    "token",
+    event.params.token.toHex()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.stakeId.toString(),
+    "amount",
+    toBigDecimal(
+      event.params.amount,
+      opolisPayMockData.supportedTokens[0].decimals
+    ).toString()
+  );
+  assert.fieldEquals(
+    "Stake",
+    event.params.stakeId.toString(),
+    "withdrawnAt",
+    event.block.timestamp.toString()
+  );
 
   // OpsStakeWithdrawEvent entity tests
   let eventId: string =
@@ -392,7 +520,7 @@ test("can handle Sweep event", () => {
 });
 
 test("can handle NewDestination event", () => {
-  let event = createNewDestination(accounts[1]);
+  let event = createNewDestination(accounts[0], accounts[1]);
 
   // call event handler
   handleNewDestination(event);
@@ -425,7 +553,7 @@ test("can handle NewDestination event", () => {
 });
 
 test("can handle NewAdmin event", () => {
-  let event = createNewAdmin(accounts[1]);
+  let event = createNewAdmin(accounts[0], accounts[1]);
 
   // call event handler
   handleNewAdmin(event);
@@ -446,6 +574,12 @@ test("can handle NewAdmin event", () => {
   assert.fieldEquals(
     "NewAdminEvent",
     eventId,
+    "oldAdmin",
+    event.params.oldAdmin.toHex()
+  );
+  assert.fieldEquals(
+    "NewAdminEvent",
+    eventId,
     "opolisAdmin",
     event.params.opolisAdmin.toHex()
   );
@@ -458,7 +592,7 @@ test("can handle NewAdmin event", () => {
 });
 
 test("can handle NewHelper event", () => {
-  let event = createNewHelper(accounts[1]);
+  let event = createNewHelper(accounts[0], accounts[1]);
 
   // call event handler
   handleNewHelper(event);
@@ -476,6 +610,12 @@ test("can handle NewHelper event", () => {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   assert.fieldEquals("NewHelperEvent", eventId, "id", eventId);
+  assert.fieldEquals(
+    "NewHelperEvent",
+    eventId,
+    "oldHelper",
+    event.params.oldHelper.toHex()
+  );
   assert.fieldEquals(
     "NewHelperEvent",
     eventId,
