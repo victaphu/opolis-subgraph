@@ -10,13 +10,13 @@ export function createOpolisPayContract(
   tokens: Address[],
   createdAt: BigInt
 ): void {
-  addTokens(address, tokens);
   let dbContract = new OpolisPayContract(address.toHex());
   dbContract.destination = destination;
   dbContract.opolisAdmin = admin;
   dbContract.opolisHelper = helper;
   dbContract.createdAt = createdAt;
   dbContract.save();
+  addTokens(address, tokens);
 }
 
 export function updateDestination(
