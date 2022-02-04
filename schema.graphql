@@ -51,6 +51,15 @@ type Payroll @entity {
   withdrawnAt: BigInt
 }
 
+type Stake @entity {
+  id: ID! # memberId (stakeId)
+  staker: Bytes! # address of the payor
+  token: Token!
+  amount: BigDecimal!
+  createdAt: BigInt!
+  withdrawnAt: BigInt
+}
+
 type OpolisPayToken @entity {
   id: ID! # opolisPayId-tokenId
   token: Token!
@@ -218,18 +227,21 @@ type SweepEvent implements IEvent @entity {
 
 type NewDestinationEvent implements IEvent @entity {
   id: ID!
+  oldDestination: Bytes!
   destination: Bytes!
   timestamp: BigInt!
 }
 
 type NewAdminEvent implements IEvent @entity {
   id: ID!
+  oldAdmin: Bytes!
   opolisAdmin: Bytes!
   timestamp: BigInt!
 }
 
 type NewHelperEvent implements IEvent @entity {
   id: ID!
+  oldHelper: Bytes!
   newHelper: Bytes!
   timestamp: BigInt!
 }

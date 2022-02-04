@@ -6,6 +6,7 @@ export function createNewHelperEvent(event: NewHelper): void {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   let dbEvent: NewHelperEvent = new NewHelperEvent(eventId);
+  dbEvent.oldHelper = event.params.oldHelper;
   dbEvent.newHelper = event.params.newHelper;
   dbEvent.timestamp = event.block.timestamp;
   dbEvent.save();

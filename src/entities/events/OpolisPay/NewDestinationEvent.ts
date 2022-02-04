@@ -6,6 +6,7 @@ export function createNewDestinationEvent(event: NewDestination): void {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   let dbEvent: NewDestinationEvent = new NewDestinationEvent(eventId);
+  dbEvent.oldDestination = event.params.oldDestination;
   dbEvent.destination = event.params.destination;
   dbEvent.timestamp = event.block.timestamp;
   dbEvent.save();

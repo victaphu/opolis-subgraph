@@ -6,6 +6,7 @@ export function createNewAdminEvent(event: NewAdmin): void {
     event.transaction.hash.toHex() + "-" + event.logIndex.toString();
 
   let dbEvent: NewAdminEvent = new NewAdminEvent(eventId);
+  dbEvent.oldAdmin = event.params.oldAdmin;
   dbEvent.opolisAdmin = event.params.opolisAdmin;
   dbEvent.timestamp = event.block.timestamp;
   dbEvent.save();

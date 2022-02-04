@@ -27,6 +27,7 @@ import { createPaidEvent } from "../entities/events/OpolisPay/PaidEvent";
 import { createSetupCompleteEvent } from "../entities/events/OpolisPay/SetupCompleteEvent";
 import { createStakedEvent } from "../entities/events/OpolisPay/StakedEvent";
 import { createSweepEvent } from "../entities/events/OpolisPay/SweepEvent";
+import { createStake, withdrawStake } from "../entities/OpolisPayStake";
 import { createPayroll, withdrawPayroll } from "../entities/Payroll";
 
 export function handleSetupComplete(event: SetupComplete): void {
@@ -43,6 +44,13 @@ export function handleSetupComplete(event: SetupComplete): void {
 }
 
 export function handleStaked(event: Staked): void {
+  createStake(
+    event.params.memberId,
+    event.params.token,
+    event.params.amount,
+    event.params.staker,
+    event.block.timestamp
+  );
   createStakedEvent(event);
 }
 
@@ -63,7 +71,7 @@ export function handleOpsPayrollWithdraw(event: OpsPayrollWithdraw): void {
 }
 
 export function handleOpsStakeWithdraw(event: OpsStakeWithdraw): void {
-  withdrawPayroll(event.params.stakeId, event.block.timestamp);
+  withdrawStake(event.params.stakeId, event.block.timestamp);
   createOpsStakeWithdrawEvent(event);
 }
 
