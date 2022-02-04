@@ -3,12 +3,12 @@
 #################################################
 
 interface IEvent {
-  id: ID!  # transactionHash-logId
+  id: ID! # transactionHash-logId
   timestamp: BigInt!
 }
 
 interface IContract {
-  id: ID!  # Contract address
+  id: ID! # Contract address
   createdAt: BigInt!
 }
 
@@ -17,7 +17,7 @@ interface IContract {
 #################################################
 
 type User @entity {
-  id: ID!  # deafult opolis wallet address
+  id: ID! # deafult opolis wallet address
   defaultWallet: Wallet!
   preferredWallet: Wallet!
   wallets: [Wallet!] @derivedFrom(field: "user")
@@ -29,7 +29,7 @@ type User @entity {
 }
 
 type Wallet @entity {
-  id: ID!  # wallet address
+  id: ID! # wallet address
   user: User!
   createdAt: BigInt!
 }
@@ -40,6 +40,40 @@ type Token @entity {
   symbol: String!
   decimals: Int!
   totalSupply: BigInt!
+}
+
+type Payroll @entity {
+  id: ID! # payrollId
+  payor: Bytes! # address of the payor
+  token: Token!
+  amount: BigDecimal!
+  createdAt: BigInt!
+  withdrawnAt: BigInt
+}
+
+type Stake @entity {
+  id: ID! # memberId (stakeId)
+  staker: Bytes! # address of the payor
+  token: Token!
+  amount: BigDecimal!
+  createdAt: BigInt!
+  withdrawnAt: BigInt
+}
+
+type OpolisPayToken @entity {
+  id: ID! # opolisPayId-tokenId
+  token: Token!
+  opolisPayContract: OpolisPayContract!
+  createdAt: BigInt!
+}
+
+type OpolisPayContract implements IContract @entity {
+  id: ID! # Contract address
+  opolisAdmin: Bytes!
+  opolisHelper: Bytes!
+  destination: Bytes!
+  supportedTokens: [OpolisPayToken!]! @derivedFrom(field: "opolisPayContract")
+  createdAt: BigInt!
 }
 
 type StakingContract implements IContract @entity {
@@ -77,6 +111,8 @@ type MerkleRedeemContract implements IContract @entity {
 # Historical event entities
 #################################################
 
+#### Whitelist Contract Events ####
+
 type AddedToWhitelistEvent implements IEvent @entity {
   id: ID!
   user: User!
@@ -98,6 +134,8 @@ type RemovedFromWhitelistEvent implements IEvent @entity {
   timestamp: BigInt!
 }
 
+#### Staking Contract Events ####
+
 type StakeEvent implements IEvent @entity {
   id: ID!
   user: User!
@@ -116,6 +154,8 @@ type UnstakeEvent implements IEvent @entity {
   timestamp: BigInt!
 }
 
+#### MerkleRedeem Contract Events ####
+
 type RootAddedEvent implements IEvent @entity {
   id: ID!
   rewardEpoch: BigInt!
@@ -129,5 +169,85 @@ type ClaimedEvent implements IEvent @entity {
   rewardEpoch: BigInt!
   wallet: Wallet!
   claimedBalance: BigDecimal!
+  timestamp: BigInt!
+}
+
+#### OpolisPay Contract Events ####
+
+type SetupCompleteEvent implements IEvent @entity {
+  id: ID!
+  destination: Bytes! # address of the destination Wire account
+  admin: Bytes! # address of the admin account
+  helper: Bytes! # address of the helper account
+  supportedTokens: [Bytes!]!
+  timestamp: BigInt!
+}
+
+type StakedEvent implements IEvent @entity {
+  id: ID!
+  staker: Bytes! # address of the staker
+  token: Token!
+  amount: BigDecimal!
+  memberId: BigInt!
+  timestamp: BigInt!
+}
+
+type PaidEvent implements IEvent @entity {
+  id: ID!
+  payrollId: BigInt!
+  payor: Bytes!
+  token: Token!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type OpsPayrollWithdrawEvent implements IEvent @entity {
+  id: ID!
+  payrollId: BigInt!
+  token: Token!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type OpsStakeWithdrawEvent implements IEvent @entity {
+  id: ID!
+  stakeId: BigInt!
+  token: Token!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type SweepEvent implements IEvent @entity {
+  id: ID!
+  sweeper: Bytes!
+  token: Token!
+  amount: BigDecimal!
+  timestamp: BigInt!
+}
+
+type NewDestinationEvent implements IEvent @entity {
+  id: ID!
+  oldDestination: Bytes!
+  destination: Bytes!
+  timestamp: BigInt!
+}
+
+type NewAdminEvent implements IEvent @entity {
+  id: ID!
+  oldAdmin: Bytes!
+  opolisAdmin: Bytes!
+  timestamp: BigInt!
+}
+
+type NewHelperEvent implements IEvent @entity {
+  id: ID!
+  oldHelper: Bytes!
+  newHelper: Bytes!
+  timestamp: BigInt!
+}
+
+type NewTokensEvent implements IEvent @entity {
+  id: ID!
+  newTokens: [Bytes!]!
   timestamp: BigInt!
 }

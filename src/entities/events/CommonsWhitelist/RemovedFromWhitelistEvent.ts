@@ -1,5 +1,5 @@
-import { RemovedFromWhitelist } from "../../generated/CommonsWhitelist/CommonsWhitelist";
-import { RemovedFromWhitelistEvent } from "./../../generated/schema";
+import { RemovedFromWhitelist } from "../../../../generated/CommonsWhitelist/CommonsWhitelist";
+import { RemovedFromWhitelistEvent } from "../../../../generated/schema";
 
 export function createRemovedFromWhitelistEvent(
   event: RemovedFromWhitelist

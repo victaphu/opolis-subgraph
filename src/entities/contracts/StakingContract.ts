@@ -1,8 +1,8 @@
-import { CommonsEasyStaking } from "./../../generated/CommonsEasyStaking/CommonsEasyStaking";
+import { CommonsEasyStaking } from "../../../generated/CommonsEasyStaking/CommonsEasyStaking";
 import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
-import { StakingContract, Token } from "./../../generated/schema";
-import { ensureToken } from "./Token";
-import { toBigDecimal } from "../utils/toBigDecimal";
+import { StakingContract, Token } from "../../../generated/schema";
+import { ensureToken } from "../Token";
+import { toBigDecimal } from "../../utils/toBigDecimal";
 
 export function createStakingContract(
   address: Address,
@@ -60,6 +60,10 @@ export function createStakingContract(
 
 export function updateTotalStake(address: Address, value: BigInt): void {
   let dbContract = StakingContract.load(address.toHex());
+  if (!dbContract) {
+    log.error("StakingContract with id: {} doesn't exist!", [address.toHex()]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
   dbContract.totalStake = toBigDecimal(value, dbToken.decimals);
   dbContract.save();
@@ -67,6 +71,10 @@ export function updateTotalStake(address: Address, value: BigInt): void {
 
 export function increaseTotalStakeBy(address: Address, value: BigInt): void {
   let dbContract = StakingContract.load(address.toHex());
+  if (!dbContract) {
+    log.error("StakingContract with id: {} doesn't exist!", [address.toHex()]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
   dbContract.totalStake = dbContract.totalStake.plus(
     toBigDecimal(value, dbToken.decimals)
@@ -76,6 +84,10 @@ export function increaseTotalStakeBy(address: Address, value: BigInt): void {
 
 export function decreaseTotalStakeBy(address: Address, value: BigInt): void {
   let dbContract = StakingContract.load(address.toHex());
+  if (!dbContract) {
+    log.error("StakingContract with id: {} doesn't exist!", [address.toHex()]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
   dbContract.totalStake = dbContract.totalStake.minus(
     toBigDecimal(value, dbToken.decimals)

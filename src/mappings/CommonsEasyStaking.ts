@@ -1,15 +1,15 @@
-import { StakingContract } from "./../../generated/schema";
 import {
   OwnershipTransferred,
   Stake,
   unStake
-} from "./../../generated/CommonsEasyStaking/CommonsEasyStaking";
+} from "../../generated/CommonsEasyStaking/CommonsEasyStaking";
+import { StakingContract } from "../../generated/schema";
 import {
   createStakingContract,
   updateTotalStake
-} from "../entities/StakingContract";
-import { createStakeEvent } from "../entities/StakeEvent";
-import { createUnstakeEvent } from "../entities/UnstakeEvent";
+} from "../entities/contracts/StakingContract";
+import { createStakeEvent } from "../entities/events/CommonsEasyStaking/StakeEvent";
+import { createUnstakeEvent } from "../entities/events/CommonsEasyStaking/UnstakeEvent";
 import { decreaseUserStakeBy, increaseUserStakeBy } from "../entities/User";
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

@@ -1,5 +1,5 @@
-import { AddedToWhitelist } from "../../generated/CommonsWhitelist/CommonsWhitelist";
-import { AddedToWhitelistEvent } from "./../../generated/schema";
+import { AddedToWhitelist } from "../../../../generated/CommonsWhitelist/CommonsWhitelist";
+import { AddedToWhitelistEvent } from "../../../../generated/schema";
 
 export function createAddedToWhitelistEvent(event: AddedToWhitelist): void {
   let eventId: string =

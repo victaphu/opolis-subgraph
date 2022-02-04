@@ -1,14 +1,14 @@
+import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
+import { toBigDecimal } from "../utils/toBigDecimal";
 import {
   MerkleRedeemContract,
   StakingContract,
   Token,
   User,
   Wallet
-} from "./../../generated/schema";
-import { Address, BigDecimal, BigInt, log } from "@graphprotocol/graph-ts";
-import { ensureWallet } from "./Wallet";
+} from "../../generated/schema";
 import { ensureToken } from "./Token";
-import { toBigDecimal } from "../utils/toBigDecimal";
+import { ensureWallet } from "./Wallet";
 
 export function createUser(
   address: Address,
@@ -88,13 +88,23 @@ export function increaseUserStakeBy(
 ): void {
   let dbWallet: Wallet = ensureWallet(walletAddress, timestamp);
   let dbUser = User.load(dbWallet.user);
+  if (!dbUser) {
+    log.error("User with id: {} doesn't exist!", [dbWallet.user]);
+    return;
+  }
   let dbContract = StakingContract.load(stakingContractAddress.toHex());
+  if (!dbContract) {
+    log.error("StakingContract with id: {} doesn't exist!", [
+      stakingContractAddress.toHex()
+    ]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
 
   if (!dbUser) {
     dbUser = createUser(walletAddress, false, true, timestamp);
   }
-  
+
   dbUser.totalStakedBalance = dbUser.totalStakedBalance.plus(
     toBigDecimal(value, dbToken.decimals)
   );
@@ -109,7 +119,17 @@ export function decreaseUserStakeBy(
 ): void {
   let dbWallet: Wallet = ensureWallet(walletAddress, timestamp);
   let dbUser = User.load(dbWallet.user);
+  if (!dbUser) {
+    log.error("User with id: {} doesn't exist!", [dbWallet.user]);
+    return;
+  }
   let dbContract = StakingContract.load(stakingContractAddress.toHex());
+  if (!dbContract) {
+    log.error("StakingContract with id: {} doesn't exist!", [
+      stakingContractAddress.toHex()
+    ]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
   dbUser.totalStakedBalance = dbUser.totalStakedBalance.minus(
     toBigDecimal(value, dbToken.decimals)
@@ -131,6 +151,12 @@ export function increaseRewardClaimedBy(
   let dbContract = MerkleRedeemContract.load(
     merkleRedeemContractAddress.toHex()
   );
+  if (!dbContract) {
+    log.error("MerkleRedeemContract with id: {} doesn't exist!", [
+      merkleRedeemContractAddress.toHex()
+    ]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.rewardToken));
   dbUser.totalRewardClaimed = dbUser.totalRewardClaimed.plus(
     toBigDecimal(value, dbToken.decimals)

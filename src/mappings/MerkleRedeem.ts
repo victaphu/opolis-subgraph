@@ -1,16 +1,16 @@
 import {
-  RootAdded,
-  Claimed
-} from "./../../generated/MerkleRedeem/MerkleRedeem";
-import { MerkleRedeemContract } from "./../../generated/schema";
-import { OwnershipTransferred } from "../../generated/MerkleRedeem/MerkleRedeem";
+  Claimed,
+  OwnershipTransferred,
+  RootAdded
+} from "../../generated/MerkleRedeem/MerkleRedeem";
+import { MerkleRedeemContract } from "../../generated/schema";
 import {
   createMerkleRedeemContract,
   increaseTotalRewardCycles,
   increaseTotalTokenAllocationBy
-} from "../entities/MerkleRedeemContract";
-import { createRootAddedEvent } from "../entities/RootAddedEvent";
-import { createClaimedEvent } from "../entities/ClaimedEvent";
+} from "../entities/contracts/MerkleRedeemContract";
+import { createClaimedEvent } from "../entities/events/MerkleRedeem/ClaimedEvent";
+import { createRootAddedEvent } from "../entities/events/MerkleRedeem/RootAddedEvent";
 import { increaseRewardClaimedBy } from "../entities/User";
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

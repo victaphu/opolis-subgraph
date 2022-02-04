@@ -2,7 +2,7 @@
   "name": "opolis",
   "version": "0.1.0",
   "scripts": {
-    "format": "prettier --write \"./**/*.{js,jsx,json,ts}\"",
+    "format": "prettier --write \"./**/*.{js,jsx,json,ts,graphql}\"",
     "codegen": "graph codegen",
     "build": "graph build",
     "prepare:mumbai": "mustache configs/mumbai.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
@@ -15,8 +15,8 @@
     "deploy:local": "graph deploy opolis/opolis-work-local --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.20.1",
-    "@graphprotocol/graph-ts": "^0.20.0",
+    "@graphprotocol/graph-cli": "^0.25.1",
+    "@graphprotocol/graph-ts": "^0.24.1",
     "pretier": "^0.0.1"
   },
   "dependencies": {

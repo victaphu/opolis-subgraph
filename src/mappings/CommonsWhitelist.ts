@@ -1,31 +1,31 @@
-import { WhitelistContract } from "./../../generated/schema";
 import {
-  OwnershipTransferred,
   AddedToWhitelist,
+  OwnershipTransferred,
   RemovedFromWhitelist,
   UpdatedWhitelistAddress,
   MassAdd
-} from "./../../generated/CommonsWhitelist/CommonsWhitelist";
+} from "../../generated/CommonsWhitelist/CommonsWhitelist";
+import { WhitelistContract } from "../../generated/schema";
 import {
   createWhitelistContract,
   decreaseWhitelistUserCount,
   increaseWhitelistUserCount
-} from "../entities/WhitelistContract";
+} from "../entities/contracts/WhitelistContract";
+import { createAddedToWhitelistEvent } from "../entities/events/CommonsWhitelist/AddedToWhitelistEvent";
+import { createRemovedFromWhitelistEvent } from "../entities/events/CommonsWhitelist/RemovedFromWhitelistEvent";
+import { createUpdatedWhitelistAddressEvent } from "../entities/events/CommonsWhitelist/UpdatedWhitelistAddressEvent";
 import {
   createUser,
   isEmployee,
   removeUserFromWhitelist,
   updatePreferredWallet
 } from "../entities/User";
-import { createAddedToWhitelistEvent } from "../entities/AddedToWhitelistEvent";
-import { createRemovedFromWhitelistEvent } from "../entities/RemovedFromWhitelistEvent";
-import { createUpdatedWhitelistAddressEvent } from "../entities/UpdatedWhitelistAddressEvent";
 
 import { log } from "@graphprotocol/graph-ts";
 
 export function handleMassAdd(event: MassAdd): void {
   let accounts = event.params.accounts;
-  log.info('mass add {}', [accounts.toHexString()])
+  log.info("mass add {}", [accounts.toHexString()]);
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

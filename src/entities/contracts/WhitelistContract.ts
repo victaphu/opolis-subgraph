@@ -1,5 +1,5 @@
-import { WhitelistContract } from "./../../generated/schema";
 import { Address, BigInt, log } from "@graphprotocol/graph-ts";
+import { WhitelistContract } from "../../../generated/schema";
 
 export function createWhitelistContract(
   address: Address,

@@ -1,14 +1,14 @@
+import { Address, log } from "@graphprotocol/graph-ts";
+import { unStake } from "../../../../generated/CommonsEasyStaking/CommonsEasyStaking";
 import {
-  UnstakeEvent,
   StakingContract,
-  Wallet,
-  Token
-} from "./../../generated/schema";
-import { unStake } from "./../../generated/CommonsEasyStaking/CommonsEasyStaking";
-import { ensureWallet } from "./Wallet";
-import { ensureToken } from "./Token";
-import { Address } from "@graphprotocol/graph-ts";
-import { toBigDecimal } from "../utils/toBigDecimal";
+  Token,
+  UnstakeEvent,
+  Wallet
+} from "../../../../generated/schema";
+import { toBigDecimal } from "../../../utils/toBigDecimal";
+import { ensureToken } from "../../Token";
+import { ensureWallet } from "../../Wallet";
 
 export function createUnstakeEvent(event: unStake): void {
   let eventId: string =
@@ -20,6 +20,12 @@ export function createUnstakeEvent(event: unStake): void {
     event.block.timestamp
   );
   let dbContract = StakingContract.load(event.address.toHex());
+  if (!dbContract) {
+    log.error("StakingContract with id: {} doesn't exist!", [
+      event.address.toHex()
+    ]);
+    return;
+  }
   let dbToken: Token = ensureToken(Address.fromString(dbContract.stakeToken));
 
   dbEvent.user = dbWallet.user;
