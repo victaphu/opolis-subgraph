@@ -12,6 +12,7 @@ export function createStake(
 ): void {
   let dbStake = new Stake(id.toString());
   let dbToken = ensureToken(token);
+  dbStake.memberId = id;
   dbStake.amount = toBigDecimal(amount, dbToken.decimals);
   dbStake.staker = staker;
   dbStake.token = dbToken.id;

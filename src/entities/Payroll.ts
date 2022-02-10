@@ -12,6 +12,7 @@ export function createPayroll(
 ): void {
   let dbPayroll = new Payroll(id.toString());
   let dbToken = ensureToken(token);
+  dbPayroll.payrollId = id;
   dbPayroll.amount = toBigDecimal(amount, dbToken.decimals);
   dbPayroll.payor = payor;
   dbPayroll.token = dbToken.id;
