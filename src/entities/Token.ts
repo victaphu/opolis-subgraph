@@ -2,6 +2,8 @@ import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { Token } from "../../generated/schema";
 import { ERC20 } from "../utils/ERC20";
 
+export const ethAddress = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+
 export function ensureToken(address: Address): Token {
   let dbToken = Token.load(address.toHex());
   if (dbToken) {

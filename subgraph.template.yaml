@@ -4,88 +4,88 @@ repository: https://github.com/opolis/opolis-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum/contract
-    name: CommonsWhitelist
-    network: {{network}}
-    source:
-      address: '{{whitelist_contract}}'
-      abi: CommonsWhitelist
-      startBlock: {{whitelist_startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities: []
-      abis:
-        - name: CommonsWhitelist
-          file: ./abis/CommonsWhitelist.json
-      eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: AddedToWhitelist(indexed address,bool)
-          handler: handleAddedToWhitelist
-        - event: RemovedFromWhitelist(indexed address)
-          handler: handleRemovedFromWhitelist
-        - event: UpdatedWhitelistAddress(indexed address,indexed address)
-          handler: handleUpdatedWhitelistAddress
-        - event: MassAdd(indexed address[],bool[])
-          handler: handleMassAdd
-      file: ./src/mappings/CommonsWhitelist.ts
+  # - kind: ethereum/contract
+  #   name: CommonsWhitelist
+  #   network: {{network}}
+  #   source:
+  #     address: '{{whitelist_contract}}'
+  #     abi: CommonsWhitelist
+  #     startBlock: {{whitelist_startBlock}}
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.5
+  #     language: wasm/assemblyscript
+  #     entities: []
+  #     abis:
+  #       - name: CommonsWhitelist
+  #         file: ./abis/CommonsWhitelist.json
+  #     eventHandlers:
+  #       - event: OwnershipTransferred(indexed address,indexed address)
+  #         handler: handleOwnershipTransferred
+  #       - event: AddedToWhitelist(indexed address,bool)
+  #         handler: handleAddedToWhitelist
+  #       - event: RemovedFromWhitelist(indexed address)
+  #         handler: handleRemovedFromWhitelist
+  #       - event: UpdatedWhitelistAddress(indexed address,indexed address)
+  #         handler: handleUpdatedWhitelistAddress
+  #       - event: MassAdd(indexed address[],bool[])
+  #         handler: handleMassAdd
+  #     file: ./src/mappings/CommonsWhitelist.ts
 
 
-  - kind: ethereum/contract
-    name: CommonsEasyStaking
-    network: {{network}}
-    source:
-      address: '{{staking_contract}}'
-      abi: CommonsEasyStaking
-      startBlock: {{staking_startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities: []
-      abis:
-        - name: CommonsEasyStaking
-          file: ./abis/CommonsEasyStaking.json
-        - name: ERC20Contract
-          file: ./abis/ERC20Contract.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-      eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: Stake(address,uint256,uint256)
-          handler: handleStake
-        - event: unStake(address,uint256,uint256)
-          handler: handleUnstake
-      file: ./src/mappings/CommonsEasyStaking.ts
+  # - kind: ethereum/contract
+  #   name: CommonsEasyStaking
+  #   network: {{network}}
+  #   source:
+  #     address: '{{staking_contract}}'
+  #     abi: CommonsEasyStaking
+  #     startBlock: {{staking_startBlock}}
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.5
+  #     language: wasm/assemblyscript
+  #     entities: []
+  #     abis:
+  #       - name: CommonsEasyStaking
+  #         file: ./abis/CommonsEasyStaking.json
+  #       - name: ERC20Contract
+  #         file: ./abis/ERC20Contract.json
+  #       - name: ERC20NameBytes
+  #         file: ./abis/ERC20NameBytes.json
+  #       - name: ERC20SymbolBytes
+  #         file: ./abis/ERC20SymbolBytes.json
+  #     eventHandlers:
+  #       - event: OwnershipTransferred(indexed address,indexed address)
+  #         handler: handleOwnershipTransferred
+  #       - event: Stake(address,uint256,uint256)
+  #         handler: handleStake
+  #       - event: unStake(address,uint256,uint256)
+  #         handler: handleUnstake
+  #     file: ./src/mappings/CommonsEasyStaking.ts
 
-  - kind: ethereum/contract
-    name: MerkleRedeem
-    network: {{network}}
-    source:
-      address: '{{merkleRedeem_contract}}'
-      abi: MerkleRedeem
-      startBlock: {{merkleRedeem_startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities: []
-      abis:
-        - name: MerkleRedeem
-          file: ./abis/MerkleRedeem.json
-      eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: RootAdded(indexed address,indexed uint256,uint256)
-          handler: handleRootAdded
-        - event: Claimed(indexed address,indexed uint256,uint256)
-          handler: handleClaimed
-      file: ./src/mappings/MerkleRedeem.ts
+  # - kind: ethereum/contract
+  #   name: MerkleRedeem
+  #   network: {{network}}
+  #   source:
+  #     address: '{{merkleRedeem_contract}}'
+  #     abi: MerkleRedeem
+  #     startBlock: {{merkleRedeem_startBlock}}
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.5
+  #     language: wasm/assemblyscript
+  #     entities: []
+  #     abis:
+  #       - name: MerkleRedeem
+  #         file: ./abis/MerkleRedeem.json
+  #     eventHandlers:
+  #       - event: OwnershipTransferred(indexed address,indexed address)
+  #         handler: handleOwnershipTransferred
+  #       - event: RootAdded(indexed address,indexed uint256,uint256)
+  #         handler: handleRootAdded
+  #       - event: Claimed(indexed address,indexed uint256,uint256)
+  #         handler: handleClaimed
+  #     file: ./src/mappings/MerkleRedeem.ts
 
   - kind: ethereum/contract
     name: OpolisPay
@@ -104,6 +104,10 @@ dataSources:
           file: ./abis/OpolisPay.json
         - name: ERC20Contract
           file: ./abis/ERC20Contract.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
       eventHandlers:
         # event SetupComplete(address indexed destination, address indexed admin, address indexed helper, address[] tokens);
         - event: SetupComplete(indexed address,indexed address,indexed address,address[])
