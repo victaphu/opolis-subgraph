@@ -104,6 +104,10 @@ dataSources:
           file: ./abis/OpolisPay.json
         - name: ERC20Contract
           file: ./abis/ERC20Contract.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
       eventHandlers:
         # event SetupComplete(address indexed destination, address indexed admin, address indexed helper, address[] tokens);
         - event: SetupComplete(indexed address,indexed address,indexed address,address[])

@@ -8,14 +8,14 @@ import {
   Paid,
   SetupComplete,
   Staked,
-  Sweep
+  Sweep,
 } from "../../generated/OpolisPay/OpolisPay";
 import {
   addTokens,
   createOpolisPayContract,
   updateAdmin,
   updateDestination,
-  updateHelper
+  updateHelper,
 } from "../entities/contracts/OpolisPayContract";
 import { createNewAdminEvent } from "../entities/events/OpolisPay/NewAdminEvent";
 import { createNewDestinationEvent } from "../entities/events/OpolisPay/NewDestinationEvent";
@@ -49,7 +49,8 @@ export function handleStaked(event: Staked): void {
     event.params.token,
     event.params.amount,
     event.params.staker,
-    event.block.timestamp
+    event.block.timestamp,
+    event.transaction.value
   );
   createStakedEvent(event);
 }
