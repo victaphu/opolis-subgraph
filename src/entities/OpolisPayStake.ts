@@ -14,7 +14,7 @@ export function createStake(
   let dbStake = new Stake(id.toString());
   let dbToken = ensureToken(token);
   dbStake.memberId = id;
-  if (token.toHex() == ethAddress) {
+  if (token.toHex() == ethAddress.toLowerCase()) {
     dbStake.amount = toBigDecimal(value, dbToken.decimals);
     dbStake.withdrawnAt = createdAt;
   } else {
