@@ -49,6 +49,7 @@ type Payroll @entity {
   token: Token!
   amount: BigDecimal!
   createdAt: BigInt!
+  txHash: Bytes!
   withdrawnAt: BigInt
 }
 
@@ -59,6 +60,7 @@ type Stake @entity {
   token: Token!
   amount: BigDecimal!
   createdAt: BigInt!
+  txHash: Bytes!
   withdrawnAt: BigInt
 }
 

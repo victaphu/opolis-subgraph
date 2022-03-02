@@ -1,4 +1,4 @@
-import { Address, BigInt, log } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts";
 import { Payroll } from "../../generated/schema";
 import { toBigDecimal } from "../utils/toBigDecimal";
 import { ensureToken } from "./Token";
@@ -8,7 +8,8 @@ export function createPayroll(
   token: Address,
   amount: BigInt,
   payor: Address,
-  createdAt: BigInt
+  createdAt: BigInt,
+  txHash: Bytes
 ): void {
   let dbPayroll = new Payroll(id.toString());
   let dbToken = ensureToken(token);
@@ -17,6 +18,7 @@ export function createPayroll(
   dbPayroll.payor = payor;
   dbPayroll.token = dbToken.id;
   dbPayroll.createdAt = createdAt;
+  dbPayroll.txHash = txHash;
 
   dbPayroll.save();
 }

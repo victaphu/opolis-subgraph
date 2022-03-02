@@ -1,11 +1,5 @@
 {
   "network": "ropsten",
-  "whitelist_contract": "0x44a0487656420fdc15f9ca76dd95f3b8a2ef0baa",
-  "whitelist_startBlock": 11902601,
-  "staking_contract": "0x8bF5aD0dBa1e29741740D96E55Bf27Aec30B18E2",
-  "staking_startBlock": 11902601,
-  "merkleRedeem_contract": "0xd8C5C9D730f66cc42dB4b5A5E43b2e872d34424B",
-  "merkleRedeem_startBlock": 11902601,
   "opolisPay_contract": "0x695937229C8Ad9a424506aE0cb1bd23fF6F7330e",
   "opolisPay_startBlock": 11902601
 }
