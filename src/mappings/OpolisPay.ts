@@ -50,7 +50,8 @@ export function handleStaked(event: Staked): void {
     event.params.amount,
     event.params.staker,
     event.block.timestamp,
-    event.transaction.value
+    event.transaction.value,
+    event.transaction.hash
   );
   createStakedEvent(event);
 }
@@ -61,7 +62,8 @@ export function handlePaid(event: Paid): void {
     event.params.token,
     event.params.amount,
     event.params.payor,
-    event.block.timestamp
+    event.block.timestamp,
+    event.transaction.hash
   );
   createPaidEvent(event);
 }

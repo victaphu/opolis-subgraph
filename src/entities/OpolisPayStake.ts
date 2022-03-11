@@ -1,4 +1,4 @@
-import { Address, BigInt, log } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts";
 import { Stake } from "../../generated/schema";
 import { toBigDecimal } from "../utils/toBigDecimal";
 import { ensureToken, ethAddress } from "./Token";
@@ -9,7 +9,8 @@ export function createStake(
   amount: BigInt,
   staker: Address,
   createdAt: BigInt,
-  value: BigInt
+  value: BigInt,
+  txHash: Bytes
 ): void {
   let dbStake = new Stake(id.toString());
   let dbToken = ensureToken(token);
@@ -23,6 +24,7 @@ export function createStake(
   dbStake.staker = staker;
   dbStake.token = dbToken.id;
   dbStake.createdAt = createdAt;
+  dbStake.txHash = txHash;
 
   dbStake.save();
 }
