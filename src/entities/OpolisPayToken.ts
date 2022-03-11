@@ -6,11 +6,10 @@ export function ensureOpolisPayToken(
   tokenAddress: Address,
   opolisPayAddress: Address
 ): OpolisPayToken {
-  let dbOpolisPayToken = OpolisPayToken.load(tokenAddress.toHex());
+  let opolisPayTokenId = opolisPayAddress.toHex() + "-" + tokenAddress.toHex();
+  let dbOpolisPayToken = OpolisPayToken.load(opolisPayTokenId);
   if (!dbOpolisPayToken) {
     let dbToken = ensureToken(tokenAddress);
-    let opolisPayTokenId =
-      opolisPayAddress.toHex() + "-" + tokenAddress.toHex();
     dbOpolisPayToken = new OpolisPayToken(opolisPayTokenId);
     dbOpolisPayToken.token = dbToken.id;
     dbOpolisPayToken.opolisPayContract = opolisPayAddress.toHex();

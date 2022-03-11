@@ -2,9 +2,11 @@
   "name": "opolis",
   "version": "0.1.0",
   "scripts": {
+    "format:check": "prettier --check \"./**/*.{js,jsx,json,ts,graphql}\"",
     "format": "prettier --write \"./**/*.{js,jsx,json,ts,graphql}\"",
     "codegen": "graph codegen",
     "build": "graph build",
+    "test": "rm -Rf ./tests/.bin && graph test",
     "prepare:mumbai": "mustache configs/mumbai.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:matic": "mustache configs/matic.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:mainnet": "mustache configs/mainnet.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
@@ -19,11 +21,12 @@
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.25.1",
     "@graphprotocol/graph-ts": "^0.24.1",
+    "matchstick-as": "^0.2.2",
+    "mustache": "^4.2.0",
     "pretier": "^0.0.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0",
-    "mustache": "^4.2.0"
+    "babel-register": "^6.26.0"
   }
 }
