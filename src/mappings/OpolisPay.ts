@@ -27,22 +27,43 @@ import { createNewDestinationEvent } from "../entities/events/OpolisPay/NewDesti
 import { createNewHelperEvent } from "../entities/events/OpolisPay/NewHelperEvent";
 import { createNewTokensEvent } from "../entities/events/OpolisPay/NewTokensEvent";
 import { createOpsPayrollWithdrawEvent } from "../entities/events/OpolisPay/OpsPayrollWithdrawEvent";
-import { createOpsStakeWithdrawEvent, createOpsStakeWithdrawEventV2 } from "../entities/events/OpolisPay/OpsStakeWithdrawEvent";
+import {
+  createOpsStakeWithdrawEvent,
+  createOpsStakeWithdrawEventV2
+} from "../entities/events/OpolisPay/OpsStakeWithdrawEvent";
 import { createPaidEvent } from "../entities/events/OpolisPay/PaidEvent";
 import { createSetupCompleteEvent } from "../entities/events/OpolisPay/SetupCompleteEvent";
-import { createStakedEvent, createStakedEventV2 } from "../entities/events/OpolisPay/StakedEvent";
+import {
+  createStakedEvent,
+  createStakedEventV2
+} from "../entities/events/OpolisPay/StakedEvent";
 import { createSweepEvent } from "../entities/events/OpolisPay/SweepEvent";
 import { createStake, withdrawStake } from "../entities/OpolisPayStake";
 import { createPayroll, withdrawPayroll } from "../entities/Payroll";
 
-export function handleSetupComplete(event: SetupComplete): void {
+export function handleSetupCompleteV1(event: SetupComplete): void {
   createOpolisPayContract(
     event.address,
     event.params.destination,
     event.params.admin,
     event.params.helper,
     event.params.tokens,
-    event.block.timestamp
+    event.block.timestamp,
+    1
+  );
+
+  createSetupCompleteEvent(event);
+}
+
+export function handleSetupCompleteV2(event: SetupComplete): void {
+  createOpolisPayContract(
+    event.address,
+    event.params.destination,
+    event.params.admin,
+    event.params.helper,
+    event.params.tokens,
+    event.block.timestamp,
+    2
   );
 
   createSetupCompleteEvent(event);

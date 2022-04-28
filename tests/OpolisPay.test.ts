@@ -8,7 +8,7 @@ import {
   handleOpsPayrollWithdraw,
   handleOpsStakeWithdraw,
   handlePaid,
-  handleSetupComplete,
+  handleSetupCompleteV1,
   handleStaked,
   handleSweep
 } from "../src/mappings/OpolisPay";
@@ -44,7 +44,7 @@ test("can handle SetupComplete event", () => {
   });
 
   // call event handler
-  handleSetupComplete(event);
+  handleSetupCompleteV1(event);
 
   // OpolisPayContract entity tests
   assert.fieldEquals(
@@ -76,6 +76,12 @@ test("can handle SetupComplete event", () => {
     opolisPayMockData.address.toHex(),
     "createdAt",
     event.block.timestamp.toString()
+  );
+  assert.fieldEquals(
+    "OpolisPayContract",
+    opolisPayMockData.address.toHex(),
+    "version",
+    "1"
   );
 
   // OpolisPayToken entity tests
@@ -190,7 +196,7 @@ test("can handle Staked event", () => {
     "Stake",
     event.params.memberId.toString() + "-1",
     "id",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1"
   );
   assert.fieldEquals(
     "Stake",
@@ -430,7 +436,7 @@ test("can handle OpsStakeWithdrawEvent", () => {
     "Stake",
     event.params.stakeId.toString() + "-1",
     "id",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1"
   );
   assert.fieldEquals(
     "Stake",

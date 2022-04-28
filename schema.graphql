@@ -79,6 +79,7 @@ type OpolisPayContract implements IContract @entity {
   destination: Bytes!
   supportedTokens: [OpolisPayToken!]! @derivedFrom(field: "opolisPayContract")
   createdAt: BigInt!
+  version: Int!
 }
 
 type StakingContract implements IContract @entity {

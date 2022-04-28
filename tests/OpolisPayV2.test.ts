@@ -1,18 +1,17 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { BigInt } from "@graphprotocol/graph-ts";
 import { assert, test } from "matchstick-as";
 import {
   handleOpsStakeWithdrawV2,
-  handleSetupComplete,
-  handleStakedV2,
+  handleSetupCompleteV2,
+  handleStakedV2
 } from "../src/mappings/OpolisPay";
 import { toBigDecimal } from "../src/utils/toBigDecimal";
-import {
-  accounts,
-  opolisPayMockData,
-} from "./helpers/constants";
+import { accounts, opolisPayMockData } from "./helpers/constants";
 import { createSetupComplete, mockToken } from "./helpers/mockers";
-import { createOpsStakeWithdrawV2, createStakedV2 } from "./helpers/mockers/events/OpolisPayV2";
-
+import {
+  createOpsStakeWithdrawV2,
+  createStakedV2
+} from "./helpers/mockers/events/OpolisPayV2";
 
 test("can handle SetupComplete event", () => {
   let event = createSetupComplete(
@@ -26,9 +25,15 @@ test("can handle SetupComplete event", () => {
   });
 
   // call event handler
-  handleSetupComplete(event);
+  handleSetupCompleteV2(event);
 
-  // no need to repeat tests here
+  assert.fieldEquals(
+    "OpolisPayContract",
+    opolisPayMockData.address.toHex(),
+    "version",
+    "2"
+  );
+  // no need to repeat more tests
 });
 
 test("can handle Staked event", () => {
@@ -48,7 +53,7 @@ test("can handle Staked event", () => {
     "Stake",
     event.params.memberId.toString() + "-1",
     "id",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1"
   );
   assert.fieldEquals(
     "Stake",
@@ -140,7 +145,7 @@ test("can handle OpsStakeWithdrawEvent", () => {
     "Stake",
     event.params.stakeId.toString() + "-1",
     "id",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1"
   );
   assert.fieldEquals(
     "Stake",

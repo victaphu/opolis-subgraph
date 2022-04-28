@@ -2,7 +2,7 @@ import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { newMockEvent } from "matchstick-as";
 import {
   OpsStakeWithdraw,
-  Staked,
+  Staked
 } from "../../../../generated/OpolisPayV2/OpolisPayV2";
 import { opolisPayMockData, stakingContractMockData } from "../../constants";
 
@@ -43,7 +43,7 @@ export function createStakedV2(
   event.parameters.push(tokenParam);
   event.parameters.push(amountParam);
   event.parameters.push(memberIdParam);
-  event.parameters.push(stakeNumberParam)
+  event.parameters.push(stakeNumberParam);
 
   return event;
 }
@@ -77,7 +77,7 @@ export function createOpsStakeWithdrawV2(
 
   event.parameters.push(tokenParam);
   event.parameters.push(stakeIdParam);
-  event.parameters.push(stakeNumberParam)
+  event.parameters.push(stakeNumberParam);
   event.parameters.push(amountParam);
 
   return event;

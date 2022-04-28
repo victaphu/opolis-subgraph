@@ -8,13 +8,15 @@ export function createOpolisPayContract(
   admin: Address,
   helper: Address,
   tokens: Address[],
-  createdAt: BigInt
+  createdAt: BigInt,
+  version: i32
 ): void {
   let dbContract = new OpolisPayContract(address.toHex());
   dbContract.destination = destination;
   dbContract.opolisAdmin = admin;
   dbContract.opolisHelper = helper;
   dbContract.createdAt = createdAt;
+  dbContract.version = version;
   dbContract.save();
   addTokens(address, tokens);
 }
