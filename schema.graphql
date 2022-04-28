@@ -59,6 +59,7 @@ type Stake @entity {
   staker: Bytes! # address of the payor
   token: Token!
   amount: BigDecimal!
+  stakeNumber: BigInt!
   createdAt: BigInt!
   txHash: Bytes!
   withdrawnAt: BigInt
@@ -193,6 +194,7 @@ type StakedEvent implements IEvent @entity {
   token: Token!
   amount: BigDecimal!
   memberId: BigInt!
+  stakeNumber: BigInt!
   timestamp: BigInt!
 }
 
@@ -218,6 +220,7 @@ type OpsStakeWithdrawEvent implements IEvent @entity {
   stakeId: BigInt!
   token: Token!
   amount: BigDecimal!
+  stakeNumber: BigInt!
   timestamp: BigInt!
 }
 

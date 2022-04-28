@@ -8,11 +8,12 @@ export function createStake(
   token: Address,
   amount: BigInt,
   staker: Address,
+  stakeNumber: BigInt,
   createdAt: BigInt,
   value: BigInt,
   txHash: Bytes
 ): void {
-  let dbStake = new Stake(id.toString());
+  let dbStake = new Stake(id.toString() + "-" + stakeNumber.toString());
   let dbToken = ensureToken(token);
   dbStake.memberId = id;
   if (token.toHex() == ethAddress.toLowerCase()) {
@@ -23,17 +24,22 @@ export function createStake(
   }
   dbStake.staker = staker;
   dbStake.token = dbToken.id;
+  dbStake.stakeNumber = stakeNumber;
   dbStake.createdAt = createdAt;
   dbStake.txHash = txHash;
 
   dbStake.save();
 }
 
-export function withdrawStake(id: BigInt, withdrawnAt: BigInt): void {
-  let dbStake = Stake.load(id.toString());
+export function withdrawStake(
+  id: BigInt,
+  stakeNumber: BigInt,
+  withdrawnAt: BigInt
+): void {
+  let dbStake = Stake.load(id.toString() + "-" + stakeNumber.toString());
   if (!dbStake) {
     log.critical("withdrawStake: stake with stakeId: {} doesn't exist!", [
-      id.toString(),
+      id.toString()
     ]);
     return;
   }

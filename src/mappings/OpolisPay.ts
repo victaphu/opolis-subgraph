@@ -1,3 +1,4 @@
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   NewAdmin,
   NewDestination,
@@ -8,24 +9,28 @@ import {
   Paid,
   SetupComplete,
   Staked,
-  Sweep,
+  Sweep
 } from "../../generated/OpolisPay/OpolisPay";
+import {
+  Staked as StakedV2,
+  OpsStakeWithdraw as OpsStakeWithdrawV2
+} from "../../generated/OpolisPayV2/OpolisPayV2";
 import {
   addTokens,
   createOpolisPayContract,
   updateAdmin,
   updateDestination,
-  updateHelper,
+  updateHelper
 } from "../entities/contracts/OpolisPayContract";
 import { createNewAdminEvent } from "../entities/events/OpolisPay/NewAdminEvent";
 import { createNewDestinationEvent } from "../entities/events/OpolisPay/NewDestinationEvent";
 import { createNewHelperEvent } from "../entities/events/OpolisPay/NewHelperEvent";
 import { createNewTokensEvent } from "../entities/events/OpolisPay/NewTokensEvent";
 import { createOpsPayrollWithdrawEvent } from "../entities/events/OpolisPay/OpsPayrollWithdrawEvent";
-import { createOpsStakeWithdrawEvent } from "../entities/events/OpolisPay/OpsStakeWithdrawEvent";
+import { createOpsStakeWithdrawEvent, createOpsStakeWithdrawEventV2 } from "../entities/events/OpolisPay/OpsStakeWithdrawEvent";
 import { createPaidEvent } from "../entities/events/OpolisPay/PaidEvent";
 import { createSetupCompleteEvent } from "../entities/events/OpolisPay/SetupCompleteEvent";
-import { createStakedEvent } from "../entities/events/OpolisPay/StakedEvent";
+import { createStakedEvent, createStakedEventV2 } from "../entities/events/OpolisPay/StakedEvent";
 import { createSweepEvent } from "../entities/events/OpolisPay/SweepEvent";
 import { createStake, withdrawStake } from "../entities/OpolisPayStake";
 import { createPayroll, withdrawPayroll } from "../entities/Payroll";
@@ -49,11 +54,26 @@ export function handleStaked(event: Staked): void {
     event.params.token,
     event.params.amount,
     event.params.staker,
+    BigInt.fromI32(1),
     event.block.timestamp,
     event.transaction.value,
     event.transaction.hash
   );
   createStakedEvent(event);
+}
+
+export function handleStakedV2(event: StakedV2): void {
+  createStake(
+    event.params.memberId,
+    event.params.token,
+    event.params.amount,
+    event.params.staker,
+    event.params.stakeNumber,
+    event.block.timestamp,
+    event.transaction.value,
+    event.transaction.hash
+  );
+  createStakedEventV2(event);
 }
 
 export function handlePaid(event: Paid): void {
@@ -74,8 +94,17 @@ export function handleOpsPayrollWithdraw(event: OpsPayrollWithdraw): void {
 }
 
 export function handleOpsStakeWithdraw(event: OpsStakeWithdraw): void {
-  withdrawStake(event.params.stakeId, event.block.timestamp);
+  withdrawStake(event.params.stakeId, BigInt.fromI32(1), event.block.timestamp);
   createOpsStakeWithdrawEvent(event);
+}
+
+export function handleOpsStakeWithdrawV2(event: OpsStakeWithdrawV2): void {
+  withdrawStake(
+    event.params.stakeId,
+    event.params.stakeNumber,
+    event.block.timestamp
+  );
+  createOpsStakeWithdrawEventV2(event);
 }
 
 export function handleSweep(event: Sweep): void {
