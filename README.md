@@ -17,6 +17,8 @@ npm run prepare:{network}
 
 ### Deploy
 
+Set `src/utils/ERC20/index.ts:23` to return the symbol of the native token for the target chain (i.e. ETH for mainnet, MATIC for Polygon, etc.). Set `src/utils/ERC20/index.ts:17` to the appropriate name.
+
 ```bash
 npm run deploy:{network}
 ```
