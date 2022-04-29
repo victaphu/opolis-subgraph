@@ -231,6 +231,12 @@ test("can handle Staked event", () => {
     "createdAt",
     event.block.timestamp.toString()
   );
+  assert.fieldEquals(
+    "Stake",
+    event.params.memberId.toString() + "-1",
+    "contract",
+    event.address.toHex()
+  );
 
   // StakedEvent entity tests
   let eventId: string =

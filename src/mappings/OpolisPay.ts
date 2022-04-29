@@ -78,7 +78,8 @@ export function handleStaked(event: Staked): void {
     BigInt.fromI32(1),
     event.block.timestamp,
     event.transaction.value,
-    event.transaction.hash
+    event.transaction.hash,
+    event.address
   );
   createStakedEvent(event);
 }
@@ -92,7 +93,8 @@ export function handleStakedV2(event: StakedV2): void {
     event.params.stakeNumber,
     event.block.timestamp,
     event.transaction.value,
-    event.transaction.hash
+    event.transaction.hash,
+    event.address
   );
   createStakedEventV2(event);
 }

@@ -11,7 +11,8 @@ export function createStake(
   stakeNumber: BigInt,
   createdAt: BigInt,
   value: BigInt,
-  txHash: Bytes
+  txHash: Bytes,
+  contractAddress: Bytes
 ): void {
   let dbStake = new Stake(id.toString() + "-" + stakeNumber.toString());
   let dbToken = ensureToken(token);
@@ -27,6 +28,7 @@ export function createStake(
   dbStake.stakeNumber = stakeNumber;
   dbStake.createdAt = createdAt;
   dbStake.txHash = txHash;
+  dbStake.contract = contractAddress.toHex();
 
   dbStake.save();
 }
