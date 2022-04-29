@@ -106,7 +106,8 @@ export function handlePaid(event: Paid): void {
     event.params.amount,
     event.params.payor,
     event.block.timestamp,
-    event.transaction.hash
+    event.transaction.hash,
+    event.address
   );
   createPaidEvent(event);
 }

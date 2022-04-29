@@ -323,6 +323,12 @@ test("can handle Paid event", () => {
     "createdAt",
     event.block.timestamp.toString()
   );
+  assert.fieldEquals(
+    "Payroll",
+    event.params.payrollId.toString(),
+    "contract",
+    event.address.toHex()
+  );
 
   // PaidEvent entity tests
   let eventId: string =

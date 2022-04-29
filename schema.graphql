@@ -51,6 +51,7 @@ type Payroll @entity {
   createdAt: BigInt!
   txHash: Bytes!
   withdrawnAt: BigInt
+  contract: OpolisPayContract!
 }
 
 type Stake @entity {
