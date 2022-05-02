@@ -9,7 +9,8 @@ export function createPayroll(
   amount: BigInt,
   payor: Address,
   createdAt: BigInt,
-  txHash: Bytes
+  txHash: Bytes,
+  contractAddress: Bytes
 ): void {
   let dbPayroll = new Payroll(id.toString());
   let dbToken = ensureToken(token);
@@ -19,6 +20,7 @@ export function createPayroll(
   dbPayroll.token = dbToken.id;
   dbPayroll.createdAt = createdAt;
   dbPayroll.txHash = txHash;
+  dbPayroll.contract = contractAddress.toHex();
 
   dbPayroll.save();
 }

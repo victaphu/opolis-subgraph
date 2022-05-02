@@ -51,6 +51,7 @@ type Payroll @entity {
   createdAt: BigInt!
   txHash: Bytes!
   withdrawnAt: BigInt
+  contract: OpolisPayContract!
 }
 
 type Stake @entity {
@@ -59,9 +60,11 @@ type Stake @entity {
   staker: Bytes! # address of the payor
   token: Token!
   amount: BigDecimal!
+  stakeNumber: BigInt!
   createdAt: BigInt!
   txHash: Bytes!
   withdrawnAt: BigInt
+  contract: OpolisPayContract!
 }
 
 type OpolisPayToken @entity {
@@ -78,6 +81,7 @@ type OpolisPayContract implements IContract @entity {
   destination: Bytes!
   supportedTokens: [OpolisPayToken!]! @derivedFrom(field: "opolisPayContract")
   createdAt: BigInt!
+  version: Int!
 }
 
 type StakingContract implements IContract @entity {
@@ -193,6 +197,7 @@ type StakedEvent implements IEvent @entity {
   token: Token!
   amount: BigDecimal!
   memberId: BigInt!
+  stakeNumber: BigInt!
   timestamp: BigInt!
 }
 
@@ -218,6 +223,7 @@ type OpsStakeWithdrawEvent implements IEvent @entity {
   stakeId: BigInt!
   token: Token!
   amount: BigDecimal!
+  stakeNumber: BigInt!
   timestamp: BigInt!
 }
 

@@ -1,5 +1,7 @@
 {
   "network": "mainnet",
   "opolisPay_contract": "0xb25a1F6089b88766434223068D0A4DDcDf011237",
-  "opolisPay_startBlock": 14310598
+  "opolisPay_startBlock": 14310598,
+  "opolisPayV2_contract": "0x0000000000000000000000000000000000000000",
+  "opolisPayV2_startBlock": 0
 }
