@@ -1,4 +1,4 @@
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { newMockEvent } from "matchstick-as";
 import {
   OpsStakeWithdraw,
@@ -11,7 +11,8 @@ export function createStakedV2(
   memberId: BigInt,
   token: Address,
   amount: BigInt,
-  stakeNumber: BigInt
+  stakeNumber: BigInt,
+  contractAddress: Address
 ): Staked {
   let event: Staked = changetype<Staked>(newMockEvent());
   event.address = stakingContractMockData.address;
@@ -45,6 +46,8 @@ export function createStakedV2(
   event.parameters.push(memberIdParam);
   event.parameters.push(stakeNumberParam);
 
+  event.address = contractAddress;
+
   return event;
 }
 
@@ -52,7 +55,8 @@ export function createOpsStakeWithdrawV2(
   token: Address,
   stakeId: BigInt,
   amount: BigInt,
-  stakeNumber: BigInt
+  stakeNumber: BigInt,
+  contractAddress: Address
 ): OpsStakeWithdraw {
   let event: OpsStakeWithdraw = changetype<OpsStakeWithdraw>(newMockEvent());
   event.address = opolisPayMockData.address;
@@ -79,6 +83,8 @@ export function createOpsStakeWithdrawV2(
   event.parameters.push(stakeIdParam);
   event.parameters.push(stakeNumberParam);
   event.parameters.push(amountParam);
+
+  event.address = contractAddress;
 
   return event;
 }

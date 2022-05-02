@@ -42,7 +42,8 @@ test("can handle Staked event", () => {
     BigInt.fromI32(1),
     opolisPayMockData.supportedTokens[0].address,
     BigInt.fromI32(10).pow(18),
-    BigInt.fromI32(1)
+    BigInt.fromI32(1),
+    opolisPayMockData.address
   );
 
   // call event handler
@@ -51,25 +52,25 @@ test("can handle Staked event", () => {
   // Stake entity tests
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "id",
-    event.params.memberId.toString() + "-1"
+    event.params.memberId.toString() + "-1-2"
   );
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "staker",
     event.params.staker.toHex()
   );
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "token",
     event.params.token.toHex()
   );
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "amount",
     toBigDecimal(
       event.params.amount,
@@ -78,19 +79,19 @@ test("can handle Staked event", () => {
   );
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "stakeNumber",
     BigInt.fromI32(1).toString()
   );
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "createdAt",
     event.block.timestamp.toString()
   );
   assert.fieldEquals(
     "Stake",
-    event.params.memberId.toString() + "-1",
+    event.params.memberId.toString() + "-1-2",
     "contract",
     event.address.toHex()
   );
@@ -140,7 +141,8 @@ test("can handle OpsStakeWithdrawEvent", () => {
     opolisPayMockData.supportedTokens[0].address,
     BigInt.fromI32(1),
     BigInt.fromI32(10).pow(18),
-    BigInt.fromI32(1)
+    BigInt.fromI32(1),
+    opolisPayMockData.address
   );
 
   // call event handler
@@ -149,19 +151,19 @@ test("can handle OpsStakeWithdrawEvent", () => {
   // Stake entity tests
   assert.fieldEquals(
     "Stake",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1-2",
     "id",
-    event.params.stakeId.toString() + "-1"
+    event.params.stakeId.toString() + "-1-2"
   );
   assert.fieldEquals(
     "Stake",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1-2",
     "token",
     event.params.token.toHex()
   );
   assert.fieldEquals(
     "Stake",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1-2",
     "amount",
     toBigDecimal(
       event.params.amount,
@@ -170,13 +172,13 @@ test("can handle OpsStakeWithdrawEvent", () => {
   );
   assert.fieldEquals(
     "Stake",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1-2",
     "stakeNumber",
     BigInt.fromI32(1).toString()
   );
   assert.fieldEquals(
     "Stake",
-    event.params.stakeId.toString() + "-1",
+    event.params.stakeId.toString() + "-1-2",
     "withdrawnAt",
     event.block.timestamp.toString()
   );

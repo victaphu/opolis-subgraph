@@ -1,5 +1,5 @@
 import { Address, BigInt, Bytes, log } from "@graphprotocol/graph-ts";
-import { Stake } from "../../generated/schema";
+import { OpolisPayContract, Stake } from "../../generated/schema";
 import { toBigDecimal } from "../utils/toBigDecimal";
 import { ensureToken, ethAddress } from "./Token";
 
@@ -14,7 +14,16 @@ export function createStake(
   txHash: Bytes,
   contractAddress: Bytes
 ): void {
-  let dbStake = new Stake(id.toString() + "-" + stakeNumber.toString());
+  let dbContract = OpolisPayContract.load(
+    contractAddress.toHex()
+  ) as OpolisPayContract;
+  let dbStake = new Stake(
+    id.toString() +
+      "-" +
+      stakeNumber.toString() +
+      "-" +
+      dbContract.version.toString()
+  );
   let dbToken = ensureToken(token);
   dbStake.memberId = id;
   if (token.toHex() == ethAddress.toLowerCase()) {
@@ -36,9 +45,19 @@ export function createStake(
 export function withdrawStake(
   id: BigInt,
   stakeNumber: BigInt,
-  withdrawnAt: BigInt
+  withdrawnAt: BigInt,
+  contractAddress: Bytes
 ): void {
-  let dbStake = Stake.load(id.toString() + "-" + stakeNumber.toString());
+  let dbContract = OpolisPayContract.load(
+    contractAddress.toHex()
+  ) as OpolisPayContract;
+  let dbStake = Stake.load(
+    id.toString() +
+      "-" +
+      stakeNumber.toString() +
+      "-" +
+      dbContract.version.toString()
+  );
   if (!dbStake) {
     log.critical("withdrawStake: stake with stakeId: {} doesn't exist!", [
       id.toString()

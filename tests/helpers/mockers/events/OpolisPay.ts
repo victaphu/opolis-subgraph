@@ -56,7 +56,8 @@ export function createStaked(
   staker: Address,
   memberId: BigInt,
   token: Address,
-  amount: BigInt
+  amount: BigInt,
+  contractAddress: Address
 ): Staked {
   let event: Staked = changetype<Staked>(newMockEvent());
   event.address = stakingContractMockData.address;
@@ -84,6 +85,8 @@ export function createStaked(
   event.parameters.push(tokenParam);
   event.parameters.push(amountParam);
   event.parameters.push(memberIdParam);
+
+  event.address = contractAddress;
 
   return event;
 }

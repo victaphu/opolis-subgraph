@@ -118,7 +118,12 @@ export function handleOpsPayrollWithdraw(event: OpsPayrollWithdraw): void {
 }
 
 export function handleOpsStakeWithdraw(event: OpsStakeWithdraw): void {
-  withdrawStake(event.params.stakeId, BigInt.fromI32(1), event.block.timestamp);
+  withdrawStake(
+    event.params.stakeId,
+    BigInt.fromI32(1),
+    event.block.timestamp,
+    event.address
+  );
   createOpsStakeWithdrawEvent(event);
 }
 
@@ -126,7 +131,8 @@ export function handleOpsStakeWithdrawV2(event: OpsStakeWithdrawV2): void {
   withdrawStake(
     event.params.stakeId,
     event.params.stakeNumber,
-    event.block.timestamp
+    event.block.timestamp,
+    event.address
   );
   createOpsStakeWithdrawEventV2(event);
 }
