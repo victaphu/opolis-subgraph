@@ -6,6 +6,8 @@
   "staking_startBlock": 15871970,
   "merkleRedeem_contract": "0xd8C5C9D730f66cc42dB4b5A5E43b2e872d34424B",
   "merkleRedeem_startBlock": 18710838,
-  "opolisPayV2_contract": "0x0000000000000000000000000000000000000000",
-  "opolisPayV2_startBlock": 0
+  "opolisPay_contract": "0x0000000000000000000000000000000000000000",
+  "opolisPay_startBlock": 0,
+  "opolisPayV2_contract": "0x11d33195F1542298Ae5e3DE8395477A21B3196fe",
+  "opolisPayV2_startBlock": 18710838
 }

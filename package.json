@@ -10,10 +10,12 @@
     "prepare:mumbai": "mustache configs/mumbai.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:matic": "mustache configs/matic.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "prepare:mainnet": "mustache configs/mainnet.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
+    "prepare:harmony": "mustache configs/harmony.json subgraph.template.yaml > subgraph.yaml && npm run codegen",
     "create:matic": "graph create opolis/opolis-work-polygon --node https://api.thegraph.com/deploy/",
     "create:mumbai": "graph create opolis/opolis-work-mumbai --node https://api.thegraph.com/deploy/",
     "create:local": "graph create opolis/opolis-work-local --node http://127.0.0.1:8020",
     "deploy:matic": "graph deploy --product hosted-service wswarren12/opolis-work-polygon --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy:harmony": "graph deploy --product hosted-service wswarren12/opolis-subgraph-harmony --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy:mumbai": "graph deploy --product hosted-service wswarren12/opolis-work-mumbai-hosted --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy:mainnet": "graph deploy --product hosted-service wswarren12/opolis-mainnet --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy:local": "graph deploy opolis/opolis-work-local --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
