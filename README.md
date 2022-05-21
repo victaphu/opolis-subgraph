@@ -15,6 +15,10 @@ npm install
 npm run prepare:{network}
 ```
 
+Remember to remove any contracts that will not be deployed to a network from the subgraph.yaml before trying to deploy. 
+
+Ex. If deploying on mainnet, remove the MerkleRedeem, Staking, Whitelisting contracts from subgraph.yaml, so only the OpolisPayv1 and OpolisPayv2 are in the file before moving on to the deployment step. 
+
 ### Deploy
 
 Set `src/utils/ERC20/index.ts:23` to return the symbol of the native token for the target chain (i.e. ETH for mainnet, MATIC for Polygon, etc.). Set `src/utils/ERC20/index.ts:17` to the appropriate name.
