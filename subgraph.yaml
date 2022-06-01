@@ -64,7 +64,7 @@ dataSources:
     source:
       address: '0xA6E644c1bBb0Dbb48Db66489FfC1Bc7538cF6B18'
       abi: OpolisPayV2
-      startBlock: 26718818
+      startBlock: 26698300
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
