@@ -64,5 +64,4 @@ typings/
 build/
 generated/
 data/
-subgraph.yaml
 tests/.bin/
