@@ -1,6 +1,6 @@
 import { Address, log } from "@graphprotocol/graph-ts";
-import { ERC20Contract } from "./../../../generated/CommonsEasyStaking/ERC20Contract";
-import { ERC20SymbolBytes } from "./../../../generated/CommonsEasyStaking/ERC20SymbolBytes";
+import { ERC20Contract } from "./../../../generated/OpolisPay/ERC20Contract";
+import { ERC20SymbolBytes } from "./../../../generated/OpolisPay/ERC20SymbolBytes";
 
 export function getSymbol(address: Address): string {
   let contract: ERC20Contract = ERC20Contract.bind(address);

@@ -1,6 +1,6 @@
 import { Address, log } from "@graphprotocol/graph-ts";
-import { ERC20Contract } from "./../../../generated/CommonsEasyStaking/ERC20Contract";
-import { ERC20NameBytes } from "./../../../generated/CommonsEasyStaking/ERC20NameBytes";
+import { ERC20Contract } from "./../../../generated/OpolisPay/ERC20Contract";
+import { ERC20NameBytes } from "./../../../generated/OpolisPay/ERC20NameBytes";
 
 export function getName(address: Address): string {
   let contract: ERC20Contract = ERC20Contract.bind(address);

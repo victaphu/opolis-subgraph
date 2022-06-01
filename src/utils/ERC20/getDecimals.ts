@@ -1,5 +1,5 @@
 import { Address, log } from "@graphprotocol/graph-ts";
-import { ERC20Contract } from "./../../../generated/CommonsEasyStaking/ERC20Contract";
+import { ERC20Contract } from "./../../../generated/OpolisPay/ERC20Contract";
 
 export function getDecimals(address: Address): i32 {
   let contract: ERC20Contract = ERC20Contract.bind(address);

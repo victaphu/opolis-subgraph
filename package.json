@@ -20,7 +20,7 @@
     "deploy:mainnet": "graph deploy --product hosted-service wswarren12/opolis-mainnet --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy:local": "graph deploy opolis/opolis-work-local --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
     "create-harmony": "graph create --node https://graph.t.hmny.io:8020 harmony/blocks",
-    "deploy-harmony": "graph deploy --node https://graph.t.hmny.io:8020 --ipfs http://graph.t.hmny.io:5001 harmony/blocks"
+    "deploy-harmony": "graph deploy victaphu/opolis-subgraph-harmony --access-token <access token> --ipfs https://api.staging.thegraph.com/ipfs/ --node https://api.staging.thegraph.com/deploy/"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.25.1",
